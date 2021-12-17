@@ -68,20 +68,45 @@ namespace PhanMemQuanLy.DAO
 
         public void insertOne(Invoice invoice)
         {
-            cnn.Open();
-            string query = $"execute sp_ThemHoaDon '{invoice.id}','{invoice.date}','{invoice.employee.id}','{invoice.customer.id}'";
-            scm = new SqlCommand(query, cnn);
-            scm.ExecuteNonQuery();
-            cnn.Close();
+            try
+            {
+                cnn.Open();
+                string query = $"execute sp_ThemHoaDon '{invoice.id}','{invoice.date}','{invoice.employee.id}','{invoice.customer.id}'";
+                scm = new SqlCommand(query, cnn);
+                scm.ExecuteNonQuery();
+                cnn.Close();
+                DAO_OrderDetail dao_od = new DAO_OrderDetail();
+                invoice.list.ForEach(od =>
+                {
+                    dao_od.insertOne(invoice.id, od);
+                });
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
         }
 
         public void updateOne(Invoice invoice)
         {
-            cnn.Open();
-            string query = $"execute sp_CapNhatHoaDon '{invoice.id}','{invoice.date}','{invoice.employee.id}','{invoice.customer.id}'";
-            scm = new SqlCommand(query, cnn);
-            scm.ExecuteNonQuery();
-            cnn.Close();
+            try
+            {
+                cnn.Open();
+                string query = $"execute sp_CapNhatHoaDon '{invoice.id}','{invoice.date}','{invoice.employee.id}','{invoice.customer.id}'";
+                scm = new SqlCommand(query, cnn);
+                scm.ExecuteNonQuery();
+                cnn.Close();
+                DAO_OrderDetail dao_od = new DAO_OrderDetail();
+                dao_od.deleteMany(invoice.id);
+                invoice.list.ForEach(od =>
+                {
+                    dao_od.insertOne(invoice.id, od);
+                });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
         }
 
         public void deleteOne(string id)

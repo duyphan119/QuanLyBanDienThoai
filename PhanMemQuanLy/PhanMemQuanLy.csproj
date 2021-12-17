@@ -115,6 +115,24 @@
     <Reference Include="Microsoft.Extensions.Primitives, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Primitives.5.0.0\lib\net461\Microsoft.Extensions.Primitives.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1484.0\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1484.0\lib\net40\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Design, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1484.0\lib\net40\Microsoft.ReportViewer.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1484.0\lib\net40\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1484.0\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Types.14.0.314.76\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Nito.AsyncEx.Context, Version=5.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Nito.AsyncEx.Context.5.1.0\lib\netstandard2.0\Nito.AsyncEx.Context.dll</HintPath>
@@ -249,20 +267,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DAO\ConnectDatabase.cs" />
+    <Compile Include="DAO\DAO_Revenue.cs" />
     <Compile Include="DAO\DAO_Customer.cs" />
     <Compile Include="DAO\DAO_Employee.cs" />
     <Compile Include="DAO\DAO_GroupProduct.cs" />
     <Compile Include="DAO\DAO_Invoice.cs" />
     <Compile Include="DAO\DAO_OrderDetail.cs" />
-    <Compile Include="DAO\DAO_ProductImage.cs" />
-    <Compile Include="DAO\DAO_ProductDetail.cs" />
     <Compile Include="DAO\DAO_Product.cs" />
-    <Compile Include="GUI\F_ListCardProduct.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GUI\F_ListCardProduct.Designer.cs">
-      <DependentUpon>F_ListCardProduct.cs</DependentUpon>
-    </Compile>
     <Compile Include="GUI\F_Login.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -281,17 +292,22 @@
     <Compile Include="GUI\F_Main_Edited.Designer.cs">
       <DependentUpon>F_Main_Edited.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\F_ProductDetail.cs">
+    <Compile Include="GUI\F_SelectCustomer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI\F_ProductDetail.Designer.cs">
-      <DependentUpon>F_ProductDetail.cs</DependentUpon>
+    <Compile Include="GUI\F_SelectCustomer.Designer.cs">
+      <DependentUpon>F_SelectCustomer.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\F_SelectProduct.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GUI\F_SelectProduct.Designer.cs">
       <DependentUpon>F_SelectProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\report\ReportDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReportDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="GUI\userControl\ucAction.cs">
       <SubType>UserControl</SubType>
@@ -335,6 +351,12 @@
     <Compile Include="GUI\userControl\ucProductSelected.Designer.cs">
       <DependentUpon>ucProductSelected.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\userControl\ucStatistics.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\userControl\ucStatistics.Designer.cs">
+      <DependentUpon>ucStatistics.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\userControl\UC_CardProduct.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -371,6 +393,7 @@
     <Compile Include="GUI\userControl\UC_SellProduct.Designer.cs">
       <DependentUpon>UC_SellProduct.cs</DependentUpon>
     </Compile>
+    <Compile Include="objects\Revenue.cs" />
     <Compile Include="objects\Customer.cs" />
     <Compile Include="objects\Employee.cs" />
     <Compile Include="objects\GroupProduct.cs" />
@@ -380,16 +403,8 @@
     <Compile Include="objects\ProductDetail.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UC_CardProductSelected.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UC_CardProductSelected.Designer.cs">
-      <DependentUpon>UC_CardProductSelected.cs</DependentUpon>
-    </Compile>
+    <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="utils\MyMethods.cs" />
-    <EmbeddedResource Include="GUI\F_ListCardProduct.resx">
-      <DependentUpon>F_ListCardProduct.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="GUI\F_Login.resx">
       <DependentUpon>F_Login.cs</DependentUpon>
     </EmbeddedResource>
@@ -399,12 +414,13 @@
     <EmbeddedResource Include="GUI\F_Main_Edited.resx">
       <DependentUpon>F_Main_Edited.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\F_ProductDetail.resx">
-      <DependentUpon>F_ProductDetail.cs</DependentUpon>
+    <EmbeddedResource Include="GUI\F_SelectCustomer.resx">
+      <DependentUpon>F_SelectCustomer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\F_SelectProduct.resx">
       <DependentUpon>F_SelectProduct.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI\report\Revenue.rdlc" />
     <EmbeddedResource Include="GUI\userControl\ucAction.resx">
       <DependentUpon>ucAction.cs</DependentUpon>
     </EmbeddedResource>
@@ -425,6 +441,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\userControl\ucProductSelected.resx">
       <DependentUpon>ucProductSelected.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\userControl\ucStatistics.resx">
+      <DependentUpon>ucStatistics.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\userControl\UC_CardProduct.resx">
       <DependentUpon>UC_CardProduct.cs</DependentUpon>
@@ -454,9 +473,17 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="UC_CardProductSelected.resx">
-      <DependentUpon>UC_CardProductSelected.cs</DependentUpon>
-    </EmbeddedResource>
+    <None Include="GUI\report\ReportDataSet.xsc">
+      <DependentUpon>ReportDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="GUI\report\ReportDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ReportDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="GUI\report\ReportDataSet.xss">
+      <DependentUpon>ReportDataSet.xsd</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -518,6 +545,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="public\img\iphone-x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SqlServerTypes\readme.htm" />
+    <Content Include="SqlServerTypes\x64\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x64\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

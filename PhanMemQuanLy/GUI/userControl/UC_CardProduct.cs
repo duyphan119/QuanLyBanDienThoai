@@ -1,4 +1,5 @@
-﻿using PhanMemQuanLy.objects;
+﻿using PhanMemQuanLy.DAO;
+using PhanMemQuanLy.objects;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,41 +15,52 @@ namespace PhanMemQuanLy.GUI.userControl
     public partial class UC_CardProduct : UserControl
     {
         private F_SelectProduct preComponent;
-        private Product product = new Product();
+        private List<Product> products = new List<Product>();
+        private DAO_Product dao_p = new DAO_Product();
         public UC_CardProduct()
         {
             InitializeComponent();
         }
-        public UC_CardProduct(F_SelectProduct f, Product p)
+        public UC_CardProduct(F_SelectProduct f, string productName)
         {
             InitializeComponent();
             preComponent = f;
-            product = p;
-            lblName.Text = product.name;
-            product.details.ForEach(detail =>
+
+            dao_p.getByName(productName).ForEach(product =>
             {
-                if (!cbSpace.Items.Contains(detail.memorySpace))
+                products.Add(product);
+                //if (!cbColor.Items.Contains(product.color))
+                //{
+                //    cbColor.Items.Add(product.color);
+                //}
+                if (!cbSpace.Items.Contains(product.memorySpace))
                 {
-                    cbSpace.Items.Add(detail.memorySpace);
-                }
-                if (!cbColor.Items.Contains(detail.color))
-                {
-                    cbColor.Items.Add(detail.color);
+                    cbSpace.Items.Add(product.memorySpace);
                 }
             });
-            cbSpace.SelectedIndex = cbColor.SelectedIndex = 0;
-            lblPrice.Text = $"{product.details[0].price.ToString("#,##")}đ";
-            picture.Image = Image.FromFile(product.images[0]);
+            cbSpace.SelectedIndex = 0;
         }
-        
+
         private void btnSelect_Click(object sender, EventArgs e)
         {
-            OrderDetail orderDetail = new OrderDetail();
-            orderDetail.detail = product.details.Find(detail => detail.memorySpace == cbSpace.Text && detail.color == cbColor.Text);
-            orderDetail.quantity = 1;
-            if (orderDetail.detail != null)
+            int index = products.FindIndex(p => p.memorySpace == cbSpace.Text && p.color == cbColor.Text);
+            if(index != -1)
             {
-                preComponent.selectProduct(orderDetail);
+                if(products[index].quantity > 1)
+                {
+                    products[index].quantity -= 1;
+                    OrderDetail orderDetail = new OrderDetail()
+                    {
+                        product = products[index],
+                        quantity = 1
+                    };
+                    preComponent.selectProduct(orderDetail);
+                    lblName.Text = $"{products[index].name} (Còn: {products[index].quantity})";
+                }
+                else
+                {
+                    MessageBox.Show("Sản phẩm đã hết", "Lưu Ý", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -57,21 +69,24 @@ namespace PhanMemQuanLy.GUI.userControl
             if (cbSpace.SelectedIndex != -1)
             {
                 cbColor.Items.Clear();
-                product.details.FindAll(detail => detail.memorySpace == cbSpace.Text).ForEach(de =>
+                products.FindAll(product => product.memorySpace == cbSpace.Text).ForEach(pro =>
                   {
-                      if (!cbColor.Items.Contains(de.color))
+                      if (!cbColor.Items.Contains(pro.color))
                       {
-                          cbColor.Items.Add(de.color);
+                          cbColor.Items.Add(pro.color);
                       }
                   });
+                cbColor.SelectedIndex = 0;
             }
-            if(cbSpace.Text != "" && cbColor.Text != "")
+            if (cbSpace.Text != "" && cbColor.Text != "")
             {
-                ProductDetail det = product.details.Find(d => d.memorySpace == cbSpace.Text && d.color == cbColor.Text);
-                if (det != null)
+                Product product = products.Find(p => p.memorySpace == cbSpace.Text && p.color == cbColor.Text);
+                if (product != null)
                 {
-                    lblPrice.Text = $"{det.price.ToString("#,##")}đ";
+                    picture.Image = Image.FromFile(product.image);
+                    lblPrice.Text = $"{product.price.ToString("#,##")}đ";
                 }
+                lblName.Text = $"{product.name} (Còn: {product.quantity})";
             }
         }
 
@@ -84,10 +99,11 @@ namespace PhanMemQuanLy.GUI.userControl
         {
             if (cbSpace.Text != "" && cbColor.Text != "")
             {
-                ProductDetail det = product.details.Find(d => d.memorySpace == cbSpace.Text && d.color == cbColor.Text);
-                if (det != null)
+                Product pr = products.Find(p => p.memorySpace == cbSpace.Text && p.color == cbColor.Text);
+                if (pr != null)
                 {
-                    lblPrice.Text = $"{det.price.ToString("#,##")}đ";
+                    picture.Image = Image.FromFile(pr.image);
+                    lblPrice.Text = $"{pr.price.ToString("#,##")}đ";
                 }
             }
         }

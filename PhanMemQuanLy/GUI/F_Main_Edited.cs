@@ -1,4 +1,5 @@
 ﻿using PhanMemQuanLy.GUI.userControl;
+using PhanMemQuanLy.objects;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -16,17 +17,21 @@ namespace PhanMemQuanLy.GUI
         private const string CHANGEPASSWORD = "Đổi mật khẩu";
         private const string LOGOUT = "Đăng xuất";
         private ucHome controlHome = new ucHome();
-        private ucEmployee controlEmployee = new ucEmployee();
+        private Employee employee;
+        private ucInvoice controlInvoice;
         private ucProduct controlProduct = new ucProduct();
         private ucCustomer controlCustomer = new ucCustomer();
-        private ucInvoice controlInvoice = new ucInvoice();
+        private ucEmployee controlEmployee = new ucEmployee();
+        private ucStatistics controlStatistics = new ucStatistics();
         private fLogin preComponent;
         private List<ucAction> actions = new List<ucAction>();
 
-        public F_Main_Edited(fLogin f)
+        public F_Main_Edited(fLogin f, Employee emp)
         {
             InitializeComponent();
             preComponent = f;
+            employee = emp;
+            controlInvoice = new ucInvoice(employee);
         }
 
         private void F_Main_Edited_Load(object sender, EventArgs e)
@@ -109,6 +114,10 @@ namespace PhanMemQuanLy.GUI
                     {
                         controlInvoice.add();
                     }
+                    else if (pnlView.Controls[0].Name == controlCustomer.Name)
+                    {
+                        controlCustomer.add();
+                    }
                     break;
                 case EDIT:
                     if (pnlView.Controls[0].Name == controlEmployee.Name)
@@ -126,6 +135,10 @@ namespace PhanMemQuanLy.GUI
                     else if (pnlView.Controls[0].Name == controlInvoice.Name)
                     {
                         controlInvoice.edit();
+                    }
+                    else if (pnlView.Controls[0].Name == controlCustomer.Name)
+                    {
+                        controlCustomer.edit();
                     }
                     break;
                 case DELETE:
@@ -145,6 +158,10 @@ namespace PhanMemQuanLy.GUI
                     {
                         controlInvoice.delete();
                     }
+                    else if (pnlView.Controls[0].Name == controlCustomer.Name)
+                    {
+                        controlCustomer.delete();
+                    }
                     break;
                 case REFRESH:
                     if (pnlView.Controls[0].Name == controlEmployee.Name)
@@ -163,6 +180,10 @@ namespace PhanMemQuanLy.GUI
                     {
                         controlInvoice.refresh();
                     }
+                    else if (pnlView.Controls[0].Name == controlCustomer.Name)
+                    {
+                        controlCustomer.refresh();
+                    }
                     break;
                 case SAVE:
                     if (pnlView.Controls[0].Name == controlEmployee.Name)
@@ -180,6 +201,10 @@ namespace PhanMemQuanLy.GUI
                     else if (pnlView.Controls[0].Name == controlInvoice.Name)
                     {
                         controlInvoice.save();
+                    }
+                    else if (pnlView.Controls[0].Name == controlCustomer.Name)
+                    {
+                        controlCustomer.save();
                     }
                     break;
             }
@@ -228,6 +253,13 @@ namespace PhanMemQuanLy.GUI
                 menuStrip.Items[i].BackColor = SystemColors.Control;
             }
             item.BackColor = SystemColors.ActiveCaption;
+        }
+
+        private void statisticsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            setActiveMenu(statisticsToolStripMenuItem);
+            pnlView.Controls.Clear();
+            pnlView.Controls.Add(controlStatistics);
         }
     }
 }

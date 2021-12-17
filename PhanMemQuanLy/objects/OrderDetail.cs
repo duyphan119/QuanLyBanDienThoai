@@ -2,22 +2,16 @@
 {
     public class OrderDetail
     {
-        public ProductDetail detail;
+        public Product product;
         public int quantity;
 
         public OrderDetail()
         {
         }
 
-        public OrderDetail(ProductDetail detail, int quantity)
-        {
-            this.detail = detail;
-            this.quantity = quantity;
-        }
-
         public decimal getTotal()
         {
-            return detail.price * quantity;
+            return product.price * quantity;
         }
     }
 }

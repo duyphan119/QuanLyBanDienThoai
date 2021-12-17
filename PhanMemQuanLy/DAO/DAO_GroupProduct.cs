@@ -34,7 +34,6 @@ namespace PhanMemQuanLy.DAO
             cnn.Close();
             return result;
         }
-
         public GroupProduct getById(string id)
         {
             cnn.Open();

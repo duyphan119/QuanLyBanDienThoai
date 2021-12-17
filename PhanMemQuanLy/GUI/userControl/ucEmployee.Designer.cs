@@ -29,7 +29,7 @@ namespace PhanMemQuanLy.GUI.userControl
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.pnlInfo = new System.Windows.Forms.Panel();
             this.cbPermission = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -74,7 +74,7 @@ namespace PhanMemQuanLy.GUI.userControl
             "ADMIN"});
             this.cbPermission.Location = new System.Drawing.Point(768, 21);
             this.cbPermission.Name = "cbPermission";
-            this.cbPermission.Size = new System.Drawing.Size(115, 30);
+            this.cbPermission.Size = new System.Drawing.Size(115, 27);
             this.cbPermission.TabIndex = 27;
             this.cbPermission.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cbPermission_KeyPress);
             // 
@@ -92,7 +92,7 @@ namespace PhanMemQuanLy.GUI.userControl
             this.txtPassword.Enabled = false;
             this.txtPassword.Location = new System.Drawing.Point(544, 21);
             this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new System.Drawing.Size(138, 28);
+            this.txtPassword.Size = new System.Drawing.Size(138, 27);
             this.txtPassword.TabIndex = 25;
             // 
             // label2
@@ -109,7 +109,7 @@ namespace PhanMemQuanLy.GUI.userControl
             this.txtName.Enabled = false;
             this.txtName.Location = new System.Drawing.Point(271, 21);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(164, 28);
+            this.txtName.Size = new System.Drawing.Size(164, 27);
             this.txtName.TabIndex = 23;
             // 
             // label1
@@ -127,7 +127,7 @@ namespace PhanMemQuanLy.GUI.userControl
             this.cbId.FormattingEnabled = true;
             this.cbId.Location = new System.Drawing.Point(85, 21);
             this.cbId.Name = "cbId";
-            this.cbId.Size = new System.Drawing.Size(98, 30);
+            this.cbId.Size = new System.Drawing.Size(98, 27);
             this.cbId.TabIndex = 21;
             this.cbId.SelectedIndexChanged += new System.EventHandler(this.cbId_SelectedIndexChanged);
             // 
@@ -147,14 +147,14 @@ namespace PhanMemQuanLy.GUI.userControl
             this.dgvEmployee.AllowUserToResizeColumns = false;
             this.dgvEmployee.AllowUserToResizeRows = false;
             this.dgvEmployee.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.ControlLight;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.ControlLight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvEmployee.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.ControlLight;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Arial", 10.2F);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.ControlLight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvEmployee.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvEmployee.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvEmployee.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.cId,
@@ -205,7 +205,7 @@ namespace PhanMemQuanLy.GUI.userControl
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.Controls.Add(this.dgvEmployee);
             this.Controls.Add(this.pnlInfo);
-            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Font = new System.Drawing.Font("Arial", 10.2F);
             this.Name = "ucEmployee";
             this.Size = new System.Drawing.Size(1236, 689);
             this.Load += new System.EventHandler(this.ucEmployee_Load);

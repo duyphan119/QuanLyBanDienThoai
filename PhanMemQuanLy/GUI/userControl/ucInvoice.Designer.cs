@@ -84,6 +84,7 @@ namespace PhanMemQuanLy.GUI.userControl
             this.txtPrice.Name = "txtPrice";
             this.txtPrice.Size = new System.Drawing.Size(139, 27);
             this.txtPrice.TabIndex = 49;
+            this.txtPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label2
             // 

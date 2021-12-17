@@ -1,4 +1,5 @@
 ﻿using PhanMemQuanLy.objects;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 
@@ -20,14 +21,14 @@ namespace PhanMemQuanLy.DAO
         {
             List<OrderDetail> result = new List<OrderDetail>();
             cnn.Open();
-            DAO_ProductDetail dao_pd = new DAO_ProductDetail();
-            string query = $"select mact, soluong from chitiethoadon where sohd = '{invoiceID}'";
+            DAO_Product dao_p = new DAO_Product();
+            string query = $"select masp, soluong from chitiethoadon where sohd = '{invoiceID}'";
             scm = new SqlCommand(query, cnn);
             reader = scm.ExecuteReader();
             while (reader.Read())
             {
                 OrderDetail orderDetail = new OrderDetail();
-                orderDetail.detail = dao_pd.getById(reader.GetString(0));
+                orderDetail.product = dao_p.getById(reader.GetString(0));
                 orderDetail.quantity = reader.GetInt32(1);
                 result.Add(orderDetail);
             }
@@ -44,25 +45,78 @@ namespace PhanMemQuanLy.DAO
             return result;
         }
 
-        public void insertOne(OrderDetail orderDetail)
+        public void insertOne(string invoiceID, OrderDetail orderDetail)
         {
-            cnn.Open();
-
-            cnn.Close();
+            try
+            {
+                cnn.Open();
+                scm = new SqlCommand($@"execute sp_ThemChiTietHoaDon '{invoiceID}', '{orderDetail.product.id}', {orderDetail.quantity}", cnn);
+                scm.ExecuteNonQuery();
+                cnn.Close();
+            }
+            catch (Exception ex)
+            {
+                cnn.Close();
+                Console.WriteLine(ex);
+            }
+            
         }
 
-        public void updateOne(OrderDetail orderDetail)
+        public void updateOne(string invoiceID, OrderDetail orderDetail)
         {
-            cnn.Open();
-
-            cnn.Close();
+            try
+            {
+                cnn.Open();
+                scm = new SqlCommand($@"execute sp_CapNhatChiTietHoaDon '{invoiceID}', '{orderDetail.product.id}', {orderDetail.quantity}", cnn);
+                scm.ExecuteNonQuery();
+                cnn.Close();
+            }
+            catch (Exception ex)
+            {
+                cnn.Close();
+                Console.WriteLine(ex);
+            }
         }
 
-        public void deleteOne(string id)
+        public void deleteMany(string invoiceID)
         {
-            cnn.Open();
+            try
+            {
+                cnn.Open();
+                scm = new SqlCommand($@"execute sp_XoaTatCaChiTietHoaDonCuaHoaDon '{invoiceID}'", cnn);
+                scm.ExecuteNonQuery();
+                cnn.Close();
+            }
+            catch(Exception ex)
+            {
+                cnn.Close();
+                Console.WriteLine(ex);
+            }
+        }
 
-            cnn.Close();
+        public void insertMany(string invoiceID, List<OrderDetail> list)
+        {
+            list.ForEach(od =>
+            {
+                insertOne(invoiceID, od);
+            });
+            
+        }
+
+        public void deleteOne(string invoiceID, OrderDetail orderDetail)
+        {
+            try
+            {
+                cnn.Open();
+                scm = new SqlCommand($@"execute sp_XoaChiTietHoaDon '{invoiceID}','{orderDetail.product.id}'", cnn);
+                scm.ExecuteNonQuery();
+                cnn.Close();
+            }
+            catch (Exception ex)
+            {
+                cnn.Close();
+                Console.WriteLine(ex);
+            }
         }
 
         public int getTotal(OrderDetail orderDetail)

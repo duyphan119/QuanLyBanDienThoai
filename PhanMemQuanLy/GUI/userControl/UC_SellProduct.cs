@@ -26,7 +26,7 @@ namespace PhanMemQuanLy.GUI.userControl
 
         private void btnSelectProduct_Click(object sender, EventArgs e)
         {
-            new F_ListCardProduct().Visible = true;
+            //new F_ListCardProduct().Visible = true;
         }
     }
 }

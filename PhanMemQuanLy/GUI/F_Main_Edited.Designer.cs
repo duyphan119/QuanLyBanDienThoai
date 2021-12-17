@@ -53,55 +53,56 @@ namespace PhanMemQuanLy.GUI
             this.statisticsToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(1368, 30);
+            this.menuStrip.Size = new System.Drawing.Size(1368, 28);
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "menuStrip1";
             // 
             // homeToolStripMenuItem
             // 
             this.homeToolStripMenuItem.Name = "homeToolStripMenuItem";
-            this.homeToolStripMenuItem.Size = new System.Drawing.Size(89, 26);
+            this.homeToolStripMenuItem.Size = new System.Drawing.Size(89, 24);
             this.homeToolStripMenuItem.Text = "Trang Chủ";
             this.homeToolStripMenuItem.Click += new System.EventHandler(this.homeToolStripMenuItem_Click);
             // 
             // invoiceToolStripMenuItem
             // 
             this.invoiceToolStripMenuItem.Name = "invoiceToolStripMenuItem";
-            this.invoiceToolStripMenuItem.Size = new System.Drawing.Size(83, 26);
+            this.invoiceToolStripMenuItem.Size = new System.Drawing.Size(83, 24);
             this.invoiceToolStripMenuItem.Text = "Hoá Đơn";
             this.invoiceToolStripMenuItem.Click += new System.EventHandler(this.invoiceToolStripMenuItem_Click);
             // 
             // productToolStripMenuItem
             // 
             this.productToolStripMenuItem.Name = "productToolStripMenuItem";
-            this.productToolStripMenuItem.Size = new System.Drawing.Size(88, 26);
+            this.productToolStripMenuItem.Size = new System.Drawing.Size(88, 24);
             this.productToolStripMenuItem.Text = "Sản Phẩm";
             this.productToolStripMenuItem.Click += new System.EventHandler(this.productToolStripMenuItem_Click);
             // 
             // customerToolStripMenuItem
             // 
             this.customerToolStripMenuItem.Name = "customerToolStripMenuItem";
-            this.customerToolStripMenuItem.Size = new System.Drawing.Size(103, 26);
+            this.customerToolStripMenuItem.Size = new System.Drawing.Size(103, 24);
             this.customerToolStripMenuItem.Text = "Khách Hàng";
             this.customerToolStripMenuItem.Click += new System.EventHandler(this.customerToolStripMenuItem_Click);
             // 
             // employeeToolStripMenuItem
             // 
             this.employeeToolStripMenuItem.Name = "employeeToolStripMenuItem";
-            this.employeeToolStripMenuItem.Size = new System.Drawing.Size(105, 26);
+            this.employeeToolStripMenuItem.Size = new System.Drawing.Size(105, 24);
             this.employeeToolStripMenuItem.Text = "Người Dùng";
             this.employeeToolStripMenuItem.Click += new System.EventHandler(this.employeeToolStripMenuItem_Click);
             // 
             // statisticsToolStripMenuItem
             // 
             this.statisticsToolStripMenuItem.Name = "statisticsToolStripMenuItem";
-            this.statisticsToolStripMenuItem.Size = new System.Drawing.Size(86, 26);
+            this.statisticsToolStripMenuItem.Size = new System.Drawing.Size(86, 24);
             this.statisticsToolStripMenuItem.Text = "Thống Kê";
+            this.statisticsToolStripMenuItem.Click += new System.EventHandler(this.statisticsToolStripMenuItem_Click);
             // 
             // fpnlActions
             // 
             this.fpnlActions.Dock = System.Windows.Forms.DockStyle.Top;
-            this.fpnlActions.Location = new System.Drawing.Point(0, 30);
+            this.fpnlActions.Location = new System.Drawing.Point(0, 28);
             this.fpnlActions.Name = "fpnlActions";
             this.fpnlActions.Size = new System.Drawing.Size(1368, 100);
             this.fpnlActions.TabIndex = 1;
@@ -110,9 +111,9 @@ namespace PhanMemQuanLy.GUI
             // 
             this.pnlView.BackColor = System.Drawing.SystemColors.Control;
             this.pnlView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlView.Location = new System.Drawing.Point(0, 130);
+            this.pnlView.Location = new System.Drawing.Point(0, 128);
             this.pnlView.Name = "pnlView";
-            this.pnlView.Size = new System.Drawing.Size(1368, 607);
+            this.pnlView.Size = new System.Drawing.Size(1368, 609);
             this.pnlView.TabIndex = 2;
             // 
             // F_Main_Edited
@@ -126,7 +127,7 @@ namespace PhanMemQuanLy.GUI
             this.MainMenuStrip = this.menuStrip;
             this.Name = "F_Main_Edited";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "F_Main_Edited";
+            this.Text = "Phần Mềm Quản Lý Bán Điện Thoại";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.F_Main_Edited_FormClosed);
             this.Load += new System.EventHandler(this.F_Main_Edited_Load);
             this.menuStrip.ResumeLayout(false);

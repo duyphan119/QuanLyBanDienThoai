@@ -1,4 +1,6 @@
-﻿using PhanMemQuanLy.GUI;
+﻿using PhanMemQuanLy.DAO;
+using PhanMemQuanLy.GUI;
+using PhanMemQuanLy.objects;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -7,6 +9,8 @@ namespace PhanMemQuanLy
 {
     public partial class fLogin : Form
     {
+        private Employee employee;
+        private DAO_Employee dao_e = new DAO_Employee();
         public fLogin()
         {
             InitializeComponent();
@@ -24,7 +28,10 @@ namespace PhanMemQuanLy
 
         private void btnLogin_Click_1(object sender, EventArgs e)
         {
-            new F_Main_Edited(this).Visible = true;
+
+            employee = dao_e.getAll()[1];
+
+            new F_Main_Edited(this, employee).Visible = true;
             Visible = false;
         }
 

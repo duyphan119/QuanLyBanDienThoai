@@ -45,7 +45,7 @@ namespace PhanMemQuanLy.GUI.userControl
             this.lblName.Font = new System.Drawing.Font("Arial", 10F);
             this.lblName.Location = new System.Drawing.Point(6, 208);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(226, 40);
+            this.lblName.Size = new System.Drawing.Size(233, 40);
             this.lblName.TabIndex = 7;
             this.lblName.Text = "Iphone X";
             this.lblName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;

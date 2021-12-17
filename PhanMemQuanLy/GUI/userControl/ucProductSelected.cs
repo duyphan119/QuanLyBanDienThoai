@@ -1,13 +1,7 @@
 ﻿using PhanMemQuanLy.DAO;
 using PhanMemQuanLy.objects;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PhanMemQuanLy.GUI.userControl
@@ -27,17 +21,10 @@ namespace PhanMemQuanLy.GUI.userControl
             Anchor = ((((AnchorStyles.Top | AnchorStyles.Left) | AnchorStyles.Right)));
             preComponent = f;
             orderDetail = od;
-            Product product = dao_p.getByDetail(orderDetail.detail.id);
-            if (product != null)
-            {
-                lblInfo.Text = $"{dao_p.getByDetail(orderDetail.detail.id).name} - {orderDetail.detail.memorySpace} - {orderDetail.detail.color}";
-                if(product.images.Count > 0)
-                {
-                    pictureBox1.Image = Image.FromFile(product.images[0]);
-                }
-            }
-            lblPrice.Text = $"{orderDetail.detail.price.ToString("#,##")}đ";
+            lblInfo.Text = $"{od.product.name} - {od.product.memorySpace} - {od.product.color}";
+            pictureBox1.Image = Image.FromFile(od.product.image);
             numQuantity.Value = orderDetail.quantity;
+            lblPrice.Text = $"{orderDetail.product.price.ToString("#,##")}đ";
             txtPrice.Text = $"{orderDetail.getTotal().ToString("#,##")}đ";
         }
         public void capNhatSoLuong(int newQuantity)
@@ -45,8 +32,8 @@ namespace PhanMemQuanLy.GUI.userControl
             orderDetail.quantity = newQuantity;
             numQuantity.Value = orderDetail.quantity;
             decimal total = orderDetail.getTotal();
-            string str = (total == 0) ? "0" : total.ToString("#,##");
-            txtPrice.Text = $"{str}đ";
+            txtPrice.Text = $"{((total == 0) ? "0" : total.ToString("#,##"))}đ";
+            preComponent.capNhatTongTien(orderDetail);
         }
 
         private void btnDelete_Click(object sender, EventArgs e)

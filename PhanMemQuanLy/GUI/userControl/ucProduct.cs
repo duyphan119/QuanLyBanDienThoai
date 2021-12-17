@@ -10,7 +10,6 @@ namespace PhanMemQuanLy.GUI.userControl
 {
     public partial class ucProduct : UserControl
     {
-        private F_ProductDetail fProductDetail;
         private const string ADD = "Thêm dữ liệu";
         private const string EDIT = "Sửa dữ liệu";
         private string action = "";
@@ -18,37 +17,23 @@ namespace PhanMemQuanLy.GUI.userControl
         private DAO_GroupProduct dao_g = new DAO_GroupProduct();
         private List<GroupProduct> groups = new List<GroupProduct>();
         private List<Product> products = new List<Product>();
-        private List<PictureBox> pictures = new List<PictureBox>();
-        private Product productEditing = new Product();
         private int lengthID = 7;
+        private string pathImageDefault = @"..\..\public\img\iphone-x.png";
+        private string pathImage = "";
         public ucProduct()
         {
             InitializeComponent();
             Dock = DockStyle.Fill;
         }
-
-        private void btnProductDetail_Click(object sender, EventArgs e)
-        {
-            if (productEditing.id != "")
-            {
-                fProductDetail = new F_ProductDetail(this, productEditing);
-                fProductDetail.Visible = true;
-            }
-            else
-            {
-                MessageBox.Show(
-                    "Chưa chọn mã sản phẩm",
-                    "Lưu ý",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
-                );
-            }
-        }
         public void reset()
         {
             txtName.Text = "";
-            pictures.Clear();
-            //fpnlImages.Controls.Clear();
+            cbColor.Text = "";
+            cbMemorySpace.Text = "";
+            numQuantity.Value = 0;
+            numPrice.Value = 0;
+            pictureProduct.Image = null;
+            pathImage = "";
         }
         public void add()
         {
@@ -57,7 +42,6 @@ namespace PhanMemQuanLy.GUI.userControl
             {
                 action = ADD;
                 cbId.Text = dao_p.generateID(lengthID);
-                productEditing.id = cbId.Text;
             }
             else if (action == ADD)
             {
@@ -71,8 +55,11 @@ namespace PhanMemQuanLy.GUI.userControl
         {
             cbGroup.Enabled = status;
             txtName.Enabled = status;
-            btnProductDetail.Enabled = status;
             btnSelectImage.Enabled = status;
+            cbColor.Enabled = status;
+            cbMemorySpace.Enabled = status;
+            numPrice.Enabled = status;
+            numQuantity.Enabled = status;
         }
         public void edit()
         {
@@ -123,11 +110,9 @@ namespace PhanMemQuanLy.GUI.userControl
             cbId.Text = "";
             cbId.Enabled = false;
             cbId.Items.Clear();
-            btnProductDetail.Enabled = false;
             groups = new List<GroupProduct>();
             products = new List<Product>();
-            pictures = new List<PictureBox>();
-            productEditing = new Product();
+            dgvProduct.Rows.Clear();
             formLoad();
         }
 
@@ -146,6 +131,26 @@ namespace PhanMemQuanLy.GUI.userControl
             if(txtName.Text == "")
             {
                 error += "Tên không được bỏ trống\n";
+            }
+            if (cbColor.Text == "")
+            {
+                error += "Chưa chọn nhãn hiệu\n";
+            }
+            if (cbMemorySpace.Text == "")
+            {
+                error += "Chưa chọn nhãn hiệu\n";
+            }
+            if (numQuantity.Value == 0)
+            {
+                error += "Số lượng > 0\n";
+            }
+            if (numPrice.Value == 0)
+            {
+                error += "Giá bán > 0\n";
+            }
+            if (pathImage == "")
+            {
+                pathImage = pathImageDefault;
             }
             return error;
         }
@@ -166,15 +171,18 @@ namespace PhanMemQuanLy.GUI.userControl
                 {
                     dgvProduct.Rows[i].Cells[1].Value = product.name;
                     dgvProduct.Rows[i].Cells[2].Value = product.group.name;
-                    dgvProduct.Rows[i].Cells[3].Value = product.details.Count;
+                    dgvProduct.Rows[i].Cells[3].Value = product.color;
+                    dgvProduct.Rows[i].Cells[4].Value = product.memorySpace;
+                    dgvProduct.Rows[i].Cells[5].Value = product.quantity;
+                    dgvProduct.Rows[i].Cells[6].Value = product.price.ToString("#,##");
                     break;
                 }
             }
-        }
-
-        public void getListProductDetail(List<ProductDetail> details)
-        {
-            productEditing.details = details;
+            int index = products.FindIndex(p => p.id == product.id);
+            if (index != -1)
+            {
+                products[index] = product;
+            }
         }
         public Product getData()
         {
@@ -183,11 +191,14 @@ namespace PhanMemQuanLy.GUI.userControl
             {
                 return new Product()
                 {
-                    id = productEditing.id,
-                    group = productEditing.group,
-                    name = productEditing.name,
-                    images = productEditing.images,
-                    details = productEditing.details
+                    id = cbId.Text,
+                    group = groups.Find(group => group.name == cbGroup.Text),
+                    name = txtName.Text,
+                    color = cbColor.Text,
+                    memorySpace = cbMemorySpace.Text,
+                    quantity = Convert.ToInt32(numQuantity.Value),
+                    price = numPrice.Value,
+                    image = pathImage
                 };
             }
             MessageBox.Show(
@@ -223,7 +234,10 @@ namespace PhanMemQuanLy.GUI.userControl
                 product.id,
                 product.name,
                 product.group.name,
-                product.details.Count
+                product.color,
+                product.memorySpace,
+                product.quantity,
+                product.price.ToString("#,##")
             });
         }
 
@@ -250,55 +264,23 @@ namespace PhanMemQuanLy.GUI.userControl
 
         private void btnSelectImage_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Multiselect = true;
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
-                    if (openFileDialog.FileNames.Length > 0)
+                    string path = $@"..\..\public\img\{Path.GetFileName(openFileDialog.FileName)}";
+                    if (!File.Exists(Path.GetFullPath(path)))
                     {
-                        productEditing.images.Clear();
-                        pictures.Clear();
-                        //fpnlImages.Controls.Clear();
-                        foreach (string file in openFileDialog.FileNames)
-                        {
-                            string path = $@"..\..\public\img\{Path.GetFileName(file)}";
-                            if (!File.Exists(Path.GetFullPath(path)))
-                            {
-                                File.Copy(file, Path.GetFullPath(path));
-                            }
-                            pictures.Add(new PictureBox()
-                            {
-                                Name = $"picture{pictures.Count}",
-                                Image = Image.FromFile(file),
-                                Size = new Size(120, 120),
-                                SizeMode = PictureBoxSizeMode.Zoom,
-                                BackColor = Color.White
-                            });
-                            //fpnlImages.Controls.Add(pictures[pictures.Count - 1]);
-                            pictures[pictures.Count - 1].Click += new EventHandler(removeImage);
-                            productEditing.images.Add(path);
-                        }
+                        File.Copy(openFileDialog.FileName, Path.GetFullPath(path));
                     }
+                    pictureProduct.Image = Image.FromFile(path);
+                    pathImage = path;
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex);
-                    MessageBox.Show("file ko hop le");
+                    MessageBox.Show("File không hợp lệ");
                 }
-            }
-        }
-
-        private void removeImage(object sender, EventArgs e)
-        {
-            PictureBox pic = sender as PictureBox;
-            int index = pictures.FindIndex(picture => picture.Name == pic.Name);
-            if (index != -1)
-            {
-                //fpnlImages.Controls.Remove(pic);
-                pictures.RemoveAt(index);
-                productEditing.images.RemoveAt(index);
             }
         }
 
@@ -306,31 +288,24 @@ namespace PhanMemQuanLy.GUI.userControl
         {
             if (cbId.Text != "")
             {
-                productEditing.id = cbId.Text;
                 Product pro = products.Find(product => product.id == cbId.Text);
                 if(pro != null)
                 {
-                    txtName.Text = pro.name;
-                    cbGroup.Text = pro.group.name;
-                    productEditing.name = pro.name;
-                    productEditing.group = pro.group;
-                    productEditing.images = pro.images;
-                    productEditing.details = pro.details;
-                    pictures.Clear();
-                    //fpnlImages.Controls.Clear();
-                    pro.images.ForEach(image =>
+                    try
                     {
-                        pictures.Add(new PictureBox()
-                        {
-                            Name = $"picture{pictures.Count}",
-                            Image = Image.FromFile(image),
-                            Size = new Size(120, 120),
-                            SizeMode = PictureBoxSizeMode.Zoom,
-                            BackColor = Color.White
-                        });
-                        //fpnlImages.Controls.Add(pictures[pictures.Count - 1]);
-                        pictures[pictures.Count - 1].Click += new EventHandler(removeImage);
-                    });
+                        cbGroup.Text = pro.group.name;
+                        txtName.Text = pro.name;
+                        cbColor.Text = pro.color;
+                        cbMemorySpace.Text = pro.memorySpace;
+                        numQuantity.Value = pro.quantity;
+                        numPrice.Value = pro.price;
+                        pictureProduct.Image = Image.FromFile(pro.image);
+                        pathImage = pro.image;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                 }
             }
         }
@@ -342,7 +317,6 @@ namespace PhanMemQuanLy.GUI.userControl
                 GroupProduct g = groups.Find(group=>group.name == cbGroup.Text);
                 if (g != null)
                 {
-                    productEditing.group = g;
                     string id = cbId.Text;
                     cbId.Items.Clear();
                     dao_p.getByGroup(g.id).ForEach(product =>
@@ -356,12 +330,12 @@ namespace PhanMemQuanLy.GUI.userControl
 
         private void txtName_TextChanged(object sender, EventArgs e)
         {
-            productEditing.name = txtName.Text;
+            //productEditing.name = txtName.Text;
         }
 
         private void cbId_TextChanged(object sender, EventArgs e)
         {
-            productEditing.id = cbId.Text;
+            //productEditing.id = cbId.Text;
         }
 
         private void cbGroup_TextChanged(object sender, EventArgs e)

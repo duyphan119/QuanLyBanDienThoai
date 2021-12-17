@@ -3,12 +3,6 @@ using PhanMemQuanLy.GUI.userControl;
 using PhanMemQuanLy.objects;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PhanMemQuanLy.GUI
@@ -21,17 +15,15 @@ namespace PhanMemQuanLy.GUI
         private List<Product> products = new List<Product>();
         private List<GroupProduct> groups = new List<GroupProduct>();
         private DAO_Invoice dao_i = new DAO_Invoice();
-        private Invoice invoice = new Invoice();
+        private DAO_OrderDetail dao_od = new DAO_OrderDetail();
         private List<ucProductSelected> listProductSelected = new List<ucProductSelected>();
-        public F_SelectProduct(ucInvoice f, string invoiceId)
+        private List<string> productNames = new List<string>();
+        private List<OrderDetail> orderDetails = new List<OrderDetail>();
+        public F_SelectProduct(ucInvoice f, List<OrderDetail> od)
         {
             InitializeComponent();
             preComponent = f;
-            invoice = dao_i.getById(invoiceId);
-            if(invoice == null)
-            {
-                invoice = new Invoice();
-            }
+            orderDetails = od;
         }
 
         private void F_SelectProduct_Load(object sender, EventArgs e)
@@ -44,11 +36,15 @@ namespace PhanMemQuanLy.GUI
             fpnlCardProduct.Controls.Clear();
             dao_p.getAll().ForEach(product =>
             {
-                fpnlCardProduct.Controls.Add(new UC_CardProduct(this, product));
+                if (!productNames.Contains(product.name))
+                {
+                    productNames.Add(product.name);
+                    fpnlCardProduct.Controls.Add(new UC_CardProduct(this, product.name));
+                }
                 products.Add(product);
             });
             fpnlCardProductSelected.Controls.Clear();
-            invoice.list.ForEach(orderDetail =>
+            orderDetails.ForEach(orderDetail =>
             {
                 listProductSelected.Add(new ucProductSelected(this, orderDetail) { 
                     Name = $"CardProductSelected{fpnlCardProductSelected.Controls.Count}"
@@ -59,41 +55,63 @@ namespace PhanMemQuanLy.GUI
 
         public void selectProduct(OrderDetail orderDetail)
         {
-            int index = invoice.list.FindIndex(od => od.detail.id == orderDetail.detail.id);
+            int index = orderDetails.FindIndex(od => od.product.id == orderDetail.product.id);
             if (index != -1)
             {
-                invoice.list[index].quantity += orderDetail.quantity;
-                listProductSelected[index].capNhatSoLuong(invoice.list[index].quantity);
+                orderDetails[index].quantity += orderDetail.quantity;
+                listProductSelected[index].capNhatSoLuong(orderDetails[index].quantity);
             }
             else
             {
-                invoice.list.Add(orderDetail);
+                orderDetails.Add(orderDetail);
                 listProductSelected.Add(new ucProductSelected(this, orderDetail)
                 {
                     Name = $"CardProductSelected{fpnlCardProductSelected.Controls.Count}"
                 });
                 fpnlCardProductSelected.Controls.Add(listProductSelected[listProductSelected.Count - 1]);
             }
-            string str = invoice.getTotal() == 0 ? "0" : invoice.getTotal().ToString("#,##");
-            txtTotalAll.Text = $"{str}đ";
+            decimal totalPrice = 0;
+            orderDetails.ForEach(od =>
+            {
+                totalPrice += od.getTotal();
+            });
+            txtTotalAll.Text = $"{(totalPrice == 0 ? "0" : totalPrice.ToString("#,##"))}đ";
         }
 
         public void removeProduct(OrderDetail orderDetail)
         {
-            int index = invoice.list.FindIndex(od => od.detail.id == orderDetail.detail.id);
-            if(index != -1)
+            int index = orderDetails.FindIndex(od => od.product.id == orderDetail.product.id);
+            if (index != -1)
             {
-                invoice.list.RemoveAt(index);
+                orderDetails.RemoveAt(index);
                 listProductSelected.RemoveAt(index);
                 fpnlCardProductSelected.Controls.RemoveAt(index);
             }
+            decimal totalPrice = 0;
+            orderDetails.ForEach(od =>
+            {
+                totalPrice += od.getTotal();
+            });
+            txtTotalAll.Text = $"{(totalPrice == 0 ? "0" : totalPrice.ToString("#,##"))}đ";
         }
 
         private void btnSubmit_Click(object sender, EventArgs e)
         {
-            preComponent.getListOrderDetail(invoice.list);
+            preComponent.getListOrderDetail(orderDetails);
         }
-
+        public void capNhatTongTien(OrderDetail orderDetail)
+        {
+            decimal totalPrice = 0;
+            orderDetails.ForEach(od =>
+            {
+                if(od.product.id == orderDetail.product.id)
+                {
+                    od = orderDetail;
+                }
+                totalPrice += od.getTotal();
+            });
+            txtTotalAll.Text = $"{(totalPrice == 0 ? "0" : totalPrice.ToString("#,##"))}đ";
+        }
         private void cbGroup_SelectedIndexChanged(object sender, EventArgs e)
         {
             if(cbGroup.Text != "")
@@ -102,10 +120,14 @@ namespace PhanMemQuanLy.GUI
                 if (g != null)
                 {
                     products.Clear();
+                    productNames.Clear();
                     fpnlCardProduct.Controls.Clear();
                     dao_p.getByGroup(g.id).ForEach(product =>
                     {
-                        fpnlCardProduct.Controls.Add(new UC_CardProduct(this, product));
+                        if (!productNames.Contains(product.name))
+                        {
+                            fpnlCardProduct.Controls.Add(new UC_CardProduct(this, product.name));
+                        }
                         products.Add(product);
                     });
                 }
