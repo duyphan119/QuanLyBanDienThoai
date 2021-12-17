@@ -39,8 +39,9 @@ namespace PhanMemQuanLy.GUI.userControl
             rpvStatistics.RefreshReport();
         }
 
-        public void daysOfWeek(string title)
+        public void daysOfWeek()
         {
+            table.Rows.Clear();
             List<Revenue> revenues = dao_r.getRevenueDaysOfWeek(DateTime.Now);
             Revenue revenue = revenues.Find(item => item.time == 1);
             revenues.Remove(revenue);
@@ -56,18 +57,87 @@ namespace PhanMemQuanLy.GUI.userControl
                     table.Rows.Add("Chủ Nhật", item.value);
                 }
             });
+            string title = "Doanh Thu Các Ngày Trong Tuần";
             loadReport(title);
         }
 
+        public void daysOfMonth()
+        {
+            table.Rows.Clear();
+            DateTime Now = DateTime.Now;
+            List<Revenue> revenues = dao_r.getRevenueDaysOfMonth(Now);
+            revenues.ForEach(item =>
+            {
+                table.Rows.Add(item.time, item.value);
+            });
+            string title = $"Doanh Thu Các Ngày Trong Tháng {Now.Month}";
+            loadReport(title);
+        }
+        public void monthsOfYear()
+        {
+            table.Rows.Clear();
+            DateTime Now = DateTime.Now;
+            List<Revenue> revenues = dao_r.getRevenueMonthsOfYear(Now);
+            revenues.ForEach(item =>
+            {
+                table.Rows.Add(item.time, item.value);
+            });
+            string title = $"Doanh Thu Các Tháng Trong Năm {Now.Year}";
+            loadReport(title);
+        }
+        public void quartersOfYear()
+        {
+            table.Rows.Clear();
+            DateTime Now = DateTime.Now;
+            List<Revenue> revenues = dao_r.getRevenueQuartersOfYear(Now);
+            revenues.ForEach(item =>
+            {
+                table.Rows.Add(item.time, item.value);
+            });
+            string title = $"Doanh Thu Các Quý Trong Năm {Now.Year}";
+            loadReport(title);
+        }
+        public void Years(int num)
+        {
+            table.Rows.Clear();
+            DateTime Now = DateTime.Now;
+            List<Revenue> revenues = dao_r.getRevenueYears(num);
+            revenues.ForEach(item =>
+            {
+                table.Rows.Add(item.time, item.value);
+            });
+            string title = $"Doanh Thu {num} Năm Gần Đây";
+            loadReport(title);
+        }
         public void filter(int type)
         {
             switch (type)
             {
                 case 0:
-
+                    daysOfWeek();
+                    break;
+                case 1:
+                    daysOfMonth();
+                    break;
+                case 2:
+                    monthsOfYear();
+                    break;
+                case 3:
+                    quartersOfYear();
+                    break;
+                case 4:
+                    Years(3);
                     break;
             }
 
+        }
+
+        private void cbFilter_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(cbFilter.SelectedIndex != -1)
+            {
+                filter(cbFilter.SelectedIndex);
+            }
         }
     }
 }

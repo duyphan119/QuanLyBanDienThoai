@@ -88,8 +88,9 @@ namespace PhanMemQuanLy.GUI.userControl
             "Ba Năm Gần Đây"});
             this.cbFilter.Location = new System.Drawing.Point(409, 12);
             this.cbFilter.Name = "cbFilter";
-            this.cbFilter.Size = new System.Drawing.Size(167, 27);
+            this.cbFilter.Size = new System.Drawing.Size(195, 27);
             this.cbFilter.TabIndex = 4;
+            this.cbFilter.SelectedIndexChanged += new System.EventHandler(this.cbFilter_SelectedIndexChanged);
             // 
             // ucStatistics
             // 
