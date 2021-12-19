@@ -29,7 +29,7 @@ namespace PhanMemQuanLy.GUI.userControl
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.pnlInfo = new System.Windows.Forms.Panel();
             this.lblInfoCustomer = new System.Windows.Forms.Label();
             this.txtPrice = new System.Windows.Forms.TextBox();
@@ -46,12 +46,14 @@ namespace PhanMemQuanLy.GUI.userControl
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnExport = new System.Windows.Forms.Button();
             this.pnlInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvInvoice)).BeginInit();
             this.SuspendLayout();
             // 
             // pnlInfo
             // 
+            this.pnlInfo.Controls.Add(this.btnExport);
             this.pnlInfo.Controls.Add(this.lblInfoCustomer);
             this.pnlInfo.Controls.Add(this.txtPrice);
             this.pnlInfo.Controls.Add(this.label2);
@@ -72,7 +74,7 @@ namespace PhanMemQuanLy.GUI.userControl
             this.lblInfoCustomer.AutoSize = true;
             this.lblInfoCustomer.Location = new System.Drawing.Point(12, 151);
             this.lblInfoCustomer.Name = "lblInfoCustomer";
-            this.lblInfoCustomer.Size = new System.Drawing.Size(101, 20);
+            this.lblInfoCustomer.Size = new System.Drawing.Size(99, 19);
             this.lblInfoCustomer.TabIndex = 50;
             this.lblInfoCustomer.Text = "Khách Hàng";
             this.lblInfoCustomer.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -142,7 +144,7 @@ namespace PhanMemQuanLy.GUI.userControl
             this.cbId.FormattingEnabled = true;
             this.cbId.Location = new System.Drawing.Point(126, 11);
             this.cbId.Name = "cbId";
-            this.cbId.Size = new System.Drawing.Size(139, 28);
+            this.cbId.Size = new System.Drawing.Size(139, 27);
             this.cbId.TabIndex = 43;
             this.cbId.SelectedIndexChanged += new System.EventHandler(this.cbId_SelectedIndexChanged);
             // 
@@ -162,14 +164,14 @@ namespace PhanMemQuanLy.GUI.userControl
             this.dgvInvoice.AllowUserToResizeColumns = false;
             this.dgvInvoice.AllowUserToResizeRows = false;
             this.dgvInvoice.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.ControlLight;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.ControlLight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvInvoice.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.ControlLight;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.ControlLight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvInvoice.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgvInvoice.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvInvoice.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
@@ -223,12 +225,23 @@ namespace PhanMemQuanLy.GUI.userControl
             this.Column4.Name = "Column4";
             this.Column4.ReadOnly = true;
             // 
+            // btnExport
+            // 
+            this.btnExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnExport.Location = new System.Drawing.Point(16, 549);
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(249, 45);
+            this.btnExport.TabIndex = 51;
+            this.btnExport.Text = "Xuất Hoá Đơn";
+            this.btnExport.UseVisualStyleBackColor = true;
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
+            // 
             // ucInvoice
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.Controls.Add(this.dgvInvoice);
             this.Controls.Add(this.pnlInfo);
-            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "ucInvoice";
             this.Size = new System.Drawing.Size(1368, 609);
             this.Load += new System.EventHandler(this.ucInvoice_Load);
@@ -257,5 +270,6 @@ namespace PhanMemQuanLy.GUI.userControl
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cbId;
         private System.Windows.Forms.Label lblId;
+        private System.Windows.Forms.Button btnExport;
     }
 }

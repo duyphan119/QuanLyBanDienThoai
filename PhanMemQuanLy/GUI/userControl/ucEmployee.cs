@@ -14,10 +14,12 @@ namespace PhanMemQuanLy.GUI.userControl
         private DAO_Employee dao_e = new DAO_Employee();
         private List<Employee> employees = new List<Employee>();
         private int lengthID = 4;
-        public ucEmployee()
+        private Employee _employee;
+        public ucEmployee(Employee e)
         {
             InitializeComponent();
             Dock = DockStyle.Fill;
+            _employee = e;
         }
 
         private void ucEmployee_Load(object sender, EventArgs e)
@@ -67,16 +69,16 @@ namespace PhanMemQuanLy.GUI.userControl
         public void edit()
         {
             reset();
-            if (action == "")
+            if (action != EDIT)
             {
                 action = EDIT;
             }
             else if (action == EDIT)
             {
                 action = "";
-                cbId.Text = "";
             }
             setEnabled(action == EDIT);
+            cbId.Text = "";
             cbId.Enabled = (action == EDIT);
         }
 
@@ -87,21 +89,28 @@ namespace PhanMemQuanLy.GUI.userControl
                 int index = dgvEmployee.SelectedRows[i].Index;
                 if (index != -1)
                 {
-                    DialogResult answer = MessageBox.Show(
-                        $"Dữ liệu liên quan đến <{dgvEmployee.Rows[index].Cells[1].Value}> sẽ bị xoá.\nBạn có chắc chắn muốn xoá ?",
-                        "Câu hỏi",
-                        MessageBoxButtons.YesNo, MessageBoxIcon.Question
-                    );
-                    if (answer == DialogResult.Yes)
+                    if(dgvEmployee.Rows[index].Cells[0].Value.ToString() != _employee.id)
                     {
-                        int index_employee = employees.FindIndex(employee => employee.id == dgvEmployee.Rows[index].Cells[0].Value.ToString());
-                        if (index_employee != -1)
+                        DialogResult answer = MessageBox.Show(
+                            $"Dữ liệu liên quan đến <{dgvEmployee.Rows[index].Cells[1].Value}> sẽ bị xoá.\nBạn có chắc chắn muốn xoá ?",
+                            "Câu hỏi",
+                            MessageBoxButtons.YesNo, MessageBoxIcon.Question
+                        );
+                        if (answer == DialogResult.Yes)
                         {
-                            dao_e.deleteOne(employees[index_employee].id);
-                            dgvEmployee.Rows.RemoveAt(index);
-                            employees.RemoveAt(index_employee);
-                            cbId.Items.RemoveAt(index_employee);
+                            int index_employee = employees.FindIndex(emp => emp.id == dgvEmployee.Rows[index].Cells[0].Value.ToString());
+                            if (index_employee != -1)
+                            {
+                                dao_e.deleteOne(employees[index_employee].id);
+                                dgvEmployee.Rows.RemoveAt(index);
+                                employees.RemoveAt(index_employee);
+                                cbId.Items.RemoveAt(index_employee);
+                            }
                         }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Không thể xoá thông tin của bản thân", "Lưu ý");
                     }
                 }
             }
@@ -121,6 +130,11 @@ namespace PhanMemQuanLy.GUI.userControl
         public void EditEmployee(Employee employee)
         {
             dao_e.updateOne(employee);
+            int index = employees.FindIndex(em => em.id == employee.id);
+            if(index != -1)
+            {
+                employees[index] = employee;
+            }
             for (int i = 0; i < dgvEmployee.RowCount; i++)
             {
                 if (employee.id == dgvEmployee.Rows[i].Cells[0].Value.ToString())
@@ -161,7 +175,7 @@ namespace PhanMemQuanLy.GUI.userControl
             {
                 Employee employee = new Employee();
                 employee.name = txtName.Text;
-                employee.password = "123456";
+                employee.password = txtPassword.Text;
                 employee.permission = cbPermission.SelectedIndex;
                 employee.id = cbId.Text;
                 return employee;

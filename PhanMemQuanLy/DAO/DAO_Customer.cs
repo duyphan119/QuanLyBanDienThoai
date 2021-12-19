@@ -61,7 +61,7 @@ namespace PhanMemQuanLy.DAO
         public void insertOne(Customer customer)
         {
             cnn.Open();
-            string query = $@"execute sp_ThemKhachHang '{customer.id}',N'{customer.name}',N'{customer.address}',{customer.phone}";
+            string query = $@"execute sp_ThemKhachHang '{customer.id}',N'{customer.name}',N'{customer.address}','{customer.phone}'";
             scm = new SqlCommand(query, cnn);
             scm.ExecuteNonQuery();
             cnn.Close();
@@ -70,7 +70,7 @@ namespace PhanMemQuanLy.DAO
         public void updateOne(Customer customer)
         {
             cnn.Open();
-            string query = $@"execute sp_CapNhatKhachHang '{customer.id}',N'{customer.name}',N'{customer.address}',{customer.phone}";
+            string query = $@"execute sp_CapNhatKhachHang '{customer.id}',N'{customer.name}',N'{customer.address}','{customer.phone}'";
             scm = new SqlCommand(query, cnn);
             scm.ExecuteNonQuery();
             cnn.Close();

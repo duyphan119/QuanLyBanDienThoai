@@ -14,8 +14,8 @@ namespace PhanMemQuanLy.GUI.userControl
         private const string EDIT = "Sửa dữ liệu";
         private string action = "";
         private DAO_Product dao_p = new DAO_Product();
-        private DAO_GroupProduct dao_g = new DAO_GroupProduct();
-        private List<GroupProduct> groups = new List<GroupProduct>();
+        private DAO_Manufacturer dao_g = new DAO_Manufacturer();
+        private List<Manufacturer> groups = new List<Manufacturer>();
         private List<Product> products = new List<Product>();
         private int lengthID = 7;
         private string pathImageDefault = @"..\..\public\img\iphone-x.png";
@@ -110,7 +110,7 @@ namespace PhanMemQuanLy.GUI.userControl
             cbId.Text = "";
             cbId.Enabled = false;
             cbId.Items.Clear();
-            groups = new List<GroupProduct>();
+            groups = new List<Manufacturer>();
             products = new List<Product>();
             dgvProduct.Rows.Clear();
             formLoad();
@@ -314,7 +314,7 @@ namespace PhanMemQuanLy.GUI.userControl
         {
             if(cbGroup.Text != "")
             {
-                GroupProduct g = groups.Find(group=>group.name == cbGroup.Text);
+                Manufacturer g = groups.Find(group=>group.name == cbGroup.Text);
                 if (g != null)
                 {
                     string id = cbId.Text;

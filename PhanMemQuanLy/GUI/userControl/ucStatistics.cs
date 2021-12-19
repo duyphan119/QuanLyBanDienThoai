@@ -129,7 +129,6 @@ namespace PhanMemQuanLy.GUI.userControl
                     Years(3);
                     break;
             }
-
         }
 
         private void cbFilter_SelectedIndexChanged(object sender, EventArgs e)

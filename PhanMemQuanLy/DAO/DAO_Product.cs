@@ -18,11 +18,24 @@ namespace PhanMemQuanLy.DAO
             cnn = cb.Connect();
         }
 
+        public int getQuantity(string productId)
+        {
+            int result = 0;
+            cnn.Open();
+            scm = new SqlCommand($@"select soluong from sanpham where masp = '{productId}'", cnn);
+            reader = scm.ExecuteReader();
+            if (reader.Read())
+            {
+                result = reader.GetInt32(0);
+            }
+            cnn.Close();
+            return result;
+        }
         public List<Product> getAll()
         {
             List<Product> result = new List<Product>();
             cnn.Open();
-            DAO_GroupProduct dao_g = new DAO_GroupProduct();
+            DAO_Manufacturer dao_g = new DAO_Manufacturer();
             string query = "select masp, tensp, mausac, bonhotrong, soluong, giaban, hinhanh, mahieu from sanpham";
             scm = new SqlCommand(query, cnn);
             reader = scm.ExecuteReader();
@@ -49,7 +62,7 @@ namespace PhanMemQuanLy.DAO
         {
             List<Product> result = new List<Product>();
             cnn.Open();
-            DAO_GroupProduct dao_g = new DAO_GroupProduct();
+            DAO_Manufacturer dao_g = new DAO_Manufacturer();
             string query = $"select masp, tensp, mausac, bonhotrong, soluong, giaban, hinhanh, mahieu from sanpham where tensp = N'{name}'";
             scm = new SqlCommand(query, cnn);
             reader = scm.ExecuteReader();
@@ -76,7 +89,7 @@ namespace PhanMemQuanLy.DAO
         {
             List<Product> result = new List<Product>();
             cnn.Open();
-            DAO_GroupProduct dao_g = new DAO_GroupProduct();
+            DAO_Manufacturer dao_g = new DAO_Manufacturer();
             string query = $"select masp, tensp, mausac, bonhotrong, soluong, giaban, hinhanh, mahieu from sanpham where mahieu = '{groupId}'";
             scm = new SqlCommand(query, cnn);
             reader = scm.ExecuteReader();
@@ -102,7 +115,7 @@ namespace PhanMemQuanLy.DAO
         public Product getById(string id)
         {
             cnn.Open();
-            DAO_GroupProduct dao_g = new DAO_GroupProduct();
+            DAO_Manufacturer dao_g = new DAO_Manufacturer();
             string query = $"select masp, tensp, mausac, bonhotrong, soluong, giaban, hinhanh, mahieu from sanpham where masp = '{id}'";
             scm = new SqlCommand(query, cnn);
             reader = scm.ExecuteReader();
@@ -182,7 +195,7 @@ namespace PhanMemQuanLy.DAO
         {
             List<Product> result = new List<Product>();
             cnn.Open();
-            DAO_GroupProduct dao_g = new DAO_GroupProduct();
+            DAO_Manufacturer dao_g = new DAO_Manufacturer();
             string query = $"select masp, tensp, mausac, bonhotrong, soluong, giaban, hinhanh, mahieu from sanpham where tensp like N'%{keyword}%'";
             scm = new SqlCommand(query, cnn);
             reader = scm.ExecuteReader();

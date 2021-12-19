@@ -36,19 +36,20 @@ namespace PhanMemQuanLy.GUI
             this.cPassword = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cPermission = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pnlInfo = new System.Windows.Forms.Panel();
+            this.btnSelect = new System.Windows.Forms.Button();
+            this.btnAdd = new System.Windows.Forms.Button();
             this.txtPhone = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.txtAddress = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.cbId = new System.Windows.Forms.ComboBox();
             this.lblId = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.btnSelect = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.txtId = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCustomer)).BeginInit();
             this.pnlInfo.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgvCustomer
@@ -74,14 +75,14 @@ namespace PhanMemQuanLy.GUI
             this.cPermission});
             this.dgvCustomer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvCustomer.EnableHeadersVisualStyles = false;
-            this.dgvCustomer.Location = new System.Drawing.Point(0, 70);
+            this.dgvCustomer.Location = new System.Drawing.Point(0, 0);
             this.dgvCustomer.MultiSelect = false;
             this.dgvCustomer.Name = "dgvCustomer";
             this.dgvCustomer.RowHeadersVisible = false;
             this.dgvCustomer.RowHeadersWidth = 51;
             this.dgvCustomer.RowTemplate.Height = 24;
             this.dgvCustomer.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvCustomer.Size = new System.Drawing.Size(1408, 674);
+            this.dgvCustomer.Size = new System.Drawing.Size(1116, 744);
             this.dgvCustomer.TabIndex = 10;
             // 
             // cId
@@ -118,102 +119,28 @@ namespace PhanMemQuanLy.GUI
             // 
             // pnlInfo
             // 
+            this.pnlInfo.Controls.Add(this.txtId);
+            this.pnlInfo.Controls.Add(this.btnCancel);
+            this.pnlInfo.Controls.Add(this.btnSave);
+            this.pnlInfo.Controls.Add(this.btnSelect);
+            this.pnlInfo.Controls.Add(this.btnAdd);
             this.pnlInfo.Controls.Add(this.txtPhone);
             this.pnlInfo.Controls.Add(this.label3);
             this.pnlInfo.Controls.Add(this.txtAddress);
             this.pnlInfo.Controls.Add(this.label2);
             this.pnlInfo.Controls.Add(this.txtName);
             this.pnlInfo.Controls.Add(this.label1);
-            this.pnlInfo.Controls.Add(this.cbId);
             this.pnlInfo.Controls.Add(this.lblId);
-            this.pnlInfo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlInfo.Location = new System.Drawing.Point(0, 0);
+            this.pnlInfo.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pnlInfo.Location = new System.Drawing.Point(1116, 0);
             this.pnlInfo.Name = "pnlInfo";
-            this.pnlInfo.Size = new System.Drawing.Size(1408, 70);
+            this.pnlInfo.Size = new System.Drawing.Size(292, 744);
             this.pnlInfo.TabIndex = 9;
-            // 
-            // txtPhone
-            // 
-            this.txtPhone.Enabled = false;
-            this.txtPhone.Location = new System.Drawing.Point(1140, 22);
-            this.txtPhone.Name = "txtPhone";
-            this.txtPhone.Size = new System.Drawing.Size(120, 27);
-            this.txtPhone.TabIndex = 27;
-            // 
-            // label3
-            // 
-            this.label3.Location = new System.Drawing.Point(1080, 20);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(54, 30);
-            this.label3.TabIndex = 26;
-            this.label3.Text = "SĐT";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // txtAddress
-            // 
-            this.txtAddress.Enabled = false;
-            this.txtAddress.Location = new System.Drawing.Point(573, 21);
-            this.txtAddress.Name = "txtAddress";
-            this.txtAddress.Size = new System.Drawing.Size(501, 27);
-            this.txtAddress.TabIndex = 25;
-            // 
-            // label2
-            // 
-            this.label2.Location = new System.Drawing.Point(494, 20);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(73, 28);
-            this.label2.TabIndex = 24;
-            this.label2.Text = "Địa chỉ";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // txtName
-            // 
-            this.txtName.Enabled = false;
-            this.txtName.Location = new System.Drawing.Point(306, 21);
-            this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(182, 27);
-            this.txtName.TabIndex = 23;
-            // 
-            // label1
-            // 
-            this.label1.Location = new System.Drawing.Point(224, 21);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(76, 28);
-            this.label1.TabIndex = 22;
-            this.label1.Text = "Họ Tên";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // cbId
-            // 
-            this.cbId.Enabled = false;
-            this.cbId.FormattingEnabled = true;
-            this.cbId.Location = new System.Drawing.Point(85, 21);
-            this.cbId.Name = "cbId";
-            this.cbId.Size = new System.Drawing.Size(133, 27);
-            this.cbId.TabIndex = 21;
-            // 
-            // lblId
-            // 
-            this.lblId.Location = new System.Drawing.Point(6, 21);
-            this.lblId.Name = "lblId";
-            this.lblId.Size = new System.Drawing.Size(63, 30);
-            this.lblId.TabIndex = 20;
-            this.lblId.Text = "Mã KH";
-            this.lblId.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.btnSelect);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 682);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1408, 62);
-            this.panel1.TabIndex = 11;
             // 
             // btnSelect
             // 
             this.btnSelect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSelect.Location = new System.Drawing.Point(1280, 9);
+            this.btnSelect.Location = new System.Drawing.Point(158, 683);
             this.btnSelect.Name = "btnSelect";
             this.btnSelect.Size = new System.Drawing.Size(122, 47);
             this.btnSelect.TabIndex = 0;
@@ -221,11 +148,109 @@ namespace PhanMemQuanLy.GUI
             this.btnSelect.UseVisualStyleBackColor = true;
             this.btnSelect.Click += new System.EventHandler(this.btnSelect_Click);
             // 
+            // btnAdd
+            // 
+            this.btnAdd.Location = new System.Drawing.Point(13, 190);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(86, 28);
+            this.btnAdd.TabIndex = 37;
+            this.btnAdd.Text = "Thêm";
+            this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            // 
+            // txtPhone
+            // 
+            this.txtPhone.Enabled = false;
+            this.txtPhone.Location = new System.Drawing.Point(101, 157);
+            this.txtPhone.Name = "txtPhone";
+            this.txtPhone.Size = new System.Drawing.Size(179, 27);
+            this.txtPhone.TabIndex = 36;
+            // 
+            // label3
+            // 
+            this.label3.Location = new System.Drawing.Point(16, 154);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(54, 30);
+            this.label3.TabIndex = 35;
+            this.label3.Text = "SĐT";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // txtAddress
+            // 
+            this.txtAddress.Enabled = false;
+            this.txtAddress.Location = new System.Drawing.Point(101, 87);
+            this.txtAddress.Multiline = true;
+            this.txtAddress.Name = "txtAddress";
+            this.txtAddress.Size = new System.Drawing.Size(179, 64);
+            this.txtAddress.TabIndex = 34;
+            // 
+            // label2
+            // 
+            this.label2.Location = new System.Drawing.Point(16, 85);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(73, 28);
+            this.label2.TabIndex = 33;
+            this.label2.Text = "Địa chỉ";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // txtName
+            // 
+            this.txtName.Enabled = false;
+            this.txtName.Location = new System.Drawing.Point(101, 54);
+            this.txtName.Name = "txtName";
+            this.txtName.Size = new System.Drawing.Size(179, 27);
+            this.txtName.TabIndex = 32;
+            // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(16, 53);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(63, 28);
+            this.label1.TabIndex = 31;
+            this.label1.Text = "Họ Tên";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblId
+            // 
+            this.lblId.Location = new System.Drawing.Point(16, 18);
+            this.lblId.Name = "lblId";
+            this.lblId.Size = new System.Drawing.Size(63, 30);
+            this.lblId.TabIndex = 29;
+            this.lblId.Text = "Mã KH";
+            this.lblId.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // btnSave
+            // 
+            this.btnSave.Location = new System.Drawing.Point(197, 190);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(84, 28);
+            this.btnSave.TabIndex = 38;
+            this.btnSave.Text = "Lưu";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Location = new System.Drawing.Point(105, 190);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(86, 28);
+            this.btnCancel.TabIndex = 39;
+            this.btnCancel.Text = "Huỷ";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // txtId
+            // 
+            this.txtId.Enabled = false;
+            this.txtId.Location = new System.Drawing.Point(101, 21);
+            this.txtId.Name = "txtId";
+            this.txtId.Size = new System.Drawing.Size(179, 27);
+            this.txtId.TabIndex = 40;
+            // 
             // F_SelectCustomer
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1408, 744);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.dgvCustomer);
             this.Controls.Add(this.pnlInfo);
             this.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -236,7 +261,6 @@ namespace PhanMemQuanLy.GUI
             ((System.ComponentModel.ISupportInitialize)(this.dgvCustomer)).EndInit();
             this.pnlInfo.ResumeLayout(false);
             this.pnlInfo.PerformLayout();
-            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -249,15 +273,17 @@ namespace PhanMemQuanLy.GUI
         private System.Windows.Forms.DataGridViewTextBoxColumn cPassword;
         private System.Windows.Forms.DataGridViewTextBoxColumn cPermission;
         private System.Windows.Forms.Panel pnlInfo;
+        private System.Windows.Forms.Button btnSelect;
+        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.TextBox txtPhone;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtAddress;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox cbId;
         private System.Windows.Forms.Label lblId;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button btnSelect;
+        private System.Windows.Forms.TextBox txtId;
     }
 }

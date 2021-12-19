@@ -42,9 +42,9 @@ namespace PhanMemQuanLy.GUI
             this.ucProductSelected2 = new PhanMemQuanLy.GUI.userControl.ucProductSelected();
             this.ucProductSelected3 = new PhanMemQuanLy.GUI.userControl.ucProductSelected();
             this.ucProductSelected4 = new PhanMemQuanLy.GUI.userControl.ucProductSelected();
-            this.uC_CardProduct8 = new PhanMemQuanLy.GUI.userControl.UC_CardProduct();
-            this.uC_CardProduct9 = new PhanMemQuanLy.GUI.userControl.UC_CardProduct();
-            this.uC_CardProduct1 = new PhanMemQuanLy.GUI.userControl.UC_CardProduct();
+            this.uC_CardProduct8 = new PhanMemQuanLy.GUI.userControl.ucCardProduct();
+            this.uC_CardProduct9 = new PhanMemQuanLy.GUI.userControl.ucCardProduct();
+            this.uC_CardProduct1 = new PhanMemQuanLy.GUI.userControl.ucCardProduct();
             this.fpnlCardProduct.SuspendLayout();
             this.fpnlCardProductSelected.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -74,7 +74,9 @@ namespace PhanMemQuanLy.GUI
             // 
             // cbGroup
             // 
+            this.cbGroup.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbGroup.FormattingEnabled = true;
+            this.cbGroup.IntegralHeight = false;
             this.cbGroup.Location = new System.Drawing.Point(108, 14);
             this.cbGroup.Name = "cbGroup";
             this.cbGroup.Size = new System.Drawing.Size(182, 28);
@@ -247,6 +249,7 @@ namespace PhanMemQuanLy.GUI
             this.Name = "F_SelectProduct";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Chọn Sản Phẩm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.F_SelectProduct_FormClosing);
             this.Load += new System.EventHandler(this.F_SelectProduct_Load);
             this.fpnlCardProduct.ResumeLayout(false);
             this.fpnlCardProductSelected.ResumeLayout(false);
@@ -261,9 +264,9 @@ namespace PhanMemQuanLy.GUI
         private System.Windows.Forms.FlowLayoutPanel fpnlCardProduct;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cbGroup;
-        private userControl.UC_CardProduct uC_CardProduct8;
-        private userControl.UC_CardProduct uC_CardProduct9;
-        private userControl.UC_CardProduct uC_CardProduct1;
+        private userControl.ucCardProduct uC_CardProduct8;
+        private userControl.ucCardProduct uC_CardProduct9;
+        private userControl.ucCardProduct uC_CardProduct1;
         private System.Windows.Forms.Button btnSubmit;
         private System.Windows.Forms.FlowLayoutPanel fpnlCardProductSelected;
         private System.Windows.Forms.Panel panel1;

@@ -12,23 +12,30 @@ using System.Windows.Forms;
 
 namespace PhanMemQuanLy.GUI.userControl
 {
-    public partial class UC_CardProduct : UserControl
+    public partial class ucCardProduct : UserControl
     {
         private F_SelectProduct preComponent;
         private List<Product> products = new List<Product>();
         private DAO_Product dao_p = new DAO_Product();
-        public UC_CardProduct()
+        private string name = "";
+        public ucCardProduct()
         {
             InitializeComponent();
         }
-        public UC_CardProduct(F_SelectProduct f, string productName)
+
+        public string getName()
+        {
+            return name;
+        }
+
+        public ucCardProduct(F_SelectProduct f, List<OrderDetail> orderDetails, string productName)
         {
             InitializeComponent();
             preComponent = f;
+            name = productName;
 
             dao_p.getByName(productName).ForEach(product =>
             {
-                products.Add(product);
                 //if (!cbColor.Items.Contains(product.color))
                 //{
                 //    cbColor.Items.Add(product.color);
@@ -37,6 +44,12 @@ namespace PhanMemQuanLy.GUI.userControl
                 {
                     cbSpace.Items.Add(product.memorySpace);
                 }
+                int index = orderDetails.FindIndex(ord => ord.product.id == product.id);
+                if(index != -1)
+                {
+                    product.quantity -= orderDetails[index].quantity;
+                }
+                products.Add(product);
             });
             cbSpace.SelectedIndex = 0;
         }
@@ -54,13 +67,22 @@ namespace PhanMemQuanLy.GUI.userControl
                         product = products[index],
                         quantity = 1
                     };
-                    preComponent.selectProduct(orderDetail);
-                    lblName.Text = $"{products[index].name} (Còn: {products[index].quantity})";
+                    preComponent.selectProduct(this, orderDetail);
                 }
                 else
                 {
                     MessageBox.Show("Sản phẩm đã hết", "Lưu Ý", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+        }
+
+        public void updateQuantity(OrderDetail orderDetail, int step)
+        {
+            Product product = products.Find(p => p.id == orderDetail.product.id);
+            if (product != null)
+            {
+                product.quantity -= step;
+                lblName.Text = $"{product.name} (Còn: {product.quantity})";
             }
         }
 
@@ -104,6 +126,7 @@ namespace PhanMemQuanLy.GUI.userControl
                 {
                     picture.Image = Image.FromFile(pr.image);
                     lblPrice.Text = $"{pr.price.ToString("#,##")}đ";
+                    lblName.Text = $"{pr.name} (Còn: {pr.quantity})";
                 }
             }
         }

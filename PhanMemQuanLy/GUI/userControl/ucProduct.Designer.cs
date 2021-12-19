@@ -288,9 +288,9 @@ namespace PhanMemQuanLy.GUI.userControl
             // 
             this.lblGroup.Location = new System.Drawing.Point(5, 12);
             this.lblGroup.Name = "lblGroup";
-            this.lblGroup.Size = new System.Drawing.Size(98, 30);
+            this.lblGroup.Size = new System.Drawing.Size(119, 30);
             this.lblGroup.TabIndex = 20;
-            this.lblGroup.Text = "Nhãn Hiệu";
+            this.lblGroup.Text = "Nhà Sản Xuất";
             this.lblGroup.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // dgvProduct

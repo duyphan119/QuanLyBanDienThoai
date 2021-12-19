@@ -2,6 +2,7 @@
 using PhanMemQuanLy.objects;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Windows.Forms;
 
 namespace PhanMemQuanLy.GUI.userControl
@@ -14,7 +15,6 @@ namespace PhanMemQuanLy.GUI.userControl
         private List<Invoice> invoices = new List<Invoice>();
         private DAO_Invoice dao_i = new DAO_Invoice();
         private List<OrderDetail> orderDetails = new List<OrderDetail>();
-        private F_SelectProduct fSelectProduct;
         private F_SelectCustomer fSelectCustomer;
         private Customer customer;
         private int lengthID = 8;
@@ -71,7 +71,7 @@ namespace PhanMemQuanLy.GUI.userControl
                     });
                     txtPrice.Text = $"{(totalPrice == 0 ? "0" : totalPrice.ToString("#,##"))}đ";
                 }
-                fSelectProduct = new F_SelectProduct(this, orderDetails);
+               
             }
         }
 
@@ -93,16 +93,17 @@ namespace PhanMemQuanLy.GUI.userControl
                 totalPrice += od.getTotal();
             });
             txtPrice.Text = $"{(totalPrice == 0 ? "0" : totalPrice.ToString("#,##"))}đ";
-            fSelectProduct.Visible = false;
         }
 
         private void btnSelectProduct_Click(object sender, EventArgs e)
         {
-            if(fSelectProduct.Visible == false)
-            {
-                fSelectProduct = new F_SelectProduct(this, orderDetails);
-                fSelectProduct.Visible = true;
-            }
+            new F_SelectProduct(this, cbId.Text, orderDetails).Visible = true;
+            btnSelectProduct.Enabled = false;
+        }
+
+        public void finishSelectProduct()
+        {
+            btnSelectProduct.Enabled = true;
         }
 
         public void setEnabled(bool status)
@@ -137,7 +138,6 @@ namespace PhanMemQuanLy.GUI.userControl
             {
                 action = ADD;
                 cbId.Text = dao_i.generateID(lengthID);
-                fSelectProduct = new F_SelectProduct(this, orderDetails);
             }
             else
             {
@@ -241,7 +241,7 @@ namespace PhanMemQuanLy.GUI.userControl
                     dgvInvoice.Rows.Add(new object[]
                     {
                         invoice.id,
-                        invoice.date.ToString("dd/MM/yy"),
+                        invoice.date.ToString("dd/MM/yyyy"),
                         invoice.customer.name,
                         invoice.getTotal().ToString("#,##"),
                         invoice.employee.name
@@ -257,7 +257,7 @@ namespace PhanMemQuanLy.GUI.userControl
                     {
                         if(invoice.id == dgvInvoice.Rows[i].Cells[0].Value.ToString())
                         {
-                            dgvInvoice.Rows[i].Cells[1].Value = invoice.date.ToString("dd/MM/yy");
+                            dgvInvoice.Rows[i].Cells[1].Value = invoice.date.ToString("dd/MM/yyyy");
                             dgvInvoice.Rows[i].Cells[2].Value = invoice.customer.name;
                             dgvInvoice.Rows[i].Cells[3].Value = invoice.getTotal().ToString("#,##");
                             dgvInvoice.Rows[i].Cells[4].Value = invoice.employee.name;
@@ -267,6 +267,63 @@ namespace PhanMemQuanLy.GUI.userControl
                 }
                 reset();
                 dgvInvoice.ClearSelection();
+            }
+        }
+
+        private void btnExport_Click(object sender, EventArgs e)
+        {
+            if(action != "")
+            {
+                DataTable table = new DataTable();
+                table.Columns.Add("masp", typeof(string));
+                table.Columns.Add("tensp", typeof(string));
+                table.Columns.Add("mausac", typeof(string));
+                table.Columns.Add("bonhotrong", typeof(string));
+                table.Columns.Add("soluong", typeof(int));
+                table.Columns.Add("giaban", typeof(decimal));
+
+                Invoice invoice = getData();
+                if (invoice != null)
+                {
+                    if (action == ADD)
+                    {
+                        dao_i.insertOne(invoice);
+                        dgvInvoice.Rows.Add(new object[]
+                        {
+                        invoice.id,
+                        invoice.date.ToString("dd/MM/yyyy"),
+                        invoice.customer.name,
+                        invoice.getTotal().ToString("#,##"),
+                        invoice.employee.name
+                        });
+                        cbId.Items.Add(invoice.id);
+                        invoices.Add(invoice);
+                        cbId.Text = dao_i.generateID(lengthID);
+                    }
+                    else if (action == EDIT)
+                    {
+                        dao_i.updateOne(invoice);
+                        for (int i = 0; i < dgvInvoice.RowCount; i++)
+                        {
+                            if (invoice.id == dgvInvoice.Rows[i].Cells[0].Value.ToString())
+                            {
+                                dgvInvoice.Rows[i].Cells[1].Value = invoice.date.ToString("dd/MM/yyyy");
+                                dgvInvoice.Rows[i].Cells[2].Value = invoice.customer.name;
+                                dgvInvoice.Rows[i].Cells[3].Value = invoice.getTotal().ToString("#,##");
+                                dgvInvoice.Rows[i].Cells[4].Value = invoice.employee.name;
+                            }
+                        }
+                        cbId.Text = "";
+                    }
+                    reset();
+                    dgvInvoice.ClearSelection();
+                }
+                invoice.list.ForEach(od =>
+                {
+                    table.Rows.Add(od.product.id, od.product.name, od.product.color, od.product.memorySpace, od.quantity, od.product.price);
+                });
+
+                new F_Report(invoice, table).Visible = true;
             }
         }
     }

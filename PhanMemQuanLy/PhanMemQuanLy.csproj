@@ -37,9 +37,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Guna.UI2, Version=2.0.2.5, Culture=neutral, PublicKeyToken=e4b9cdd7b4cde4b4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Guna.UI2.WinForms.2.0.2.5\lib\net40\Guna.UI2.dll</HintPath>
-    </Reference>
     <Reference Include="JetBrains.Annotations, Version=2020.3.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
       <HintPath>..\packages\JetBrains.Annotations.2020.3.0\lib\net20\JetBrains.Annotations.dll</HintPath>
     </Reference>
@@ -270,10 +267,16 @@
     <Compile Include="DAO\DAO_Revenue.cs" />
     <Compile Include="DAO\DAO_Customer.cs" />
     <Compile Include="DAO\DAO_Employee.cs" />
-    <Compile Include="DAO\DAO_GroupProduct.cs" />
+    <Compile Include="DAO\DAO_Manufacturer.cs" />
     <Compile Include="DAO\DAO_Invoice.cs" />
     <Compile Include="DAO\DAO_OrderDetail.cs" />
     <Compile Include="DAO\DAO_Product.cs" />
+    <Compile Include="GUI\F_ChangePassword.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\F_ChangePassword.Designer.cs">
+      <DependentUpon>F_ChangePassword.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\F_Login.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -286,11 +289,11 @@
     <Compile Include="GUI\F_Main.Designer.cs">
       <DependentUpon>F_Main.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\F_Main_Edited.cs">
+    <Compile Include="GUI\F_Report.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI\F_Main_Edited.Designer.cs">
-      <DependentUpon>F_Main_Edited.cs</DependentUpon>
+    <Compile Include="GUI\F_Report.Designer.cs">
+      <DependentUpon>F_Report.cs</DependentUpon>
     </Compile>
     <Compile Include="GUI\F_SelectCustomer.cs">
       <SubType>Form</SubType>
@@ -339,6 +342,12 @@
     <Compile Include="GUI\userControl\ucInvoice.Designer.cs">
       <DependentUpon>ucInvoice.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\userControl\ucManufacturer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="GUI\userControl\ucManufacturer.Designer.cs">
+      <DependentUpon>ucManufacturer.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\userControl\ucProduct.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -357,46 +366,16 @@
     <Compile Include="GUI\userControl\ucStatistics.Designer.cs">
       <DependentUpon>ucStatistics.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\userControl\UC_CardProduct.cs">
+    <Compile Include="GUI\userControl\ucCardProduct.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GUI\userControl\UC_CardProduct.Designer.cs">
-      <DependentUpon>UC_CardProduct.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\userControl\UC_Employee.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GUI\userControl\UC_Employee.Designer.cs">
-      <DependentUpon>UC_Employee.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\userControl\UC_Home.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GUI\userControl\UC_Home.Designer.cs">
-      <DependentUpon>UC_Home.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\userControl\UC_NumbericUpDown.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GUI\userControl\UC_NumbericUpDown.Designer.cs">
-      <DependentUpon>UC_NumbericUpDown.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\userControl\UC_Product.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GUI\userControl\UC_Product.Designer.cs">
-      <DependentUpon>UC_Product.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GUI\userControl\UC_SellProduct.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GUI\userControl\UC_SellProduct.Designer.cs">
-      <DependentUpon>UC_SellProduct.cs</DependentUpon>
+    <Compile Include="GUI\userControl\ucCardProduct.Designer.cs">
+      <DependentUpon>ucCardProduct.cs</DependentUpon>
     </Compile>
     <Compile Include="objects\Revenue.cs" />
     <Compile Include="objects\Customer.cs" />
     <Compile Include="objects\Employee.cs" />
-    <Compile Include="objects\GroupProduct.cs" />
+    <Compile Include="objects\Manufacturer.cs" />
     <Compile Include="objects\Invoice.cs" />
     <Compile Include="objects\OrderDetail.cs" />
     <Compile Include="objects\Product.cs" />
@@ -405,14 +384,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="utils\MyMethods.cs" />
+    <EmbeddedResource Include="GUI\F_ChangePassword.resx">
+      <DependentUpon>F_ChangePassword.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\F_Login.resx">
       <DependentUpon>F_Login.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\F_Main.resx">
       <DependentUpon>F_Main.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\F_Main_Edited.resx">
-      <DependentUpon>F_Main_Edited.cs</DependentUpon>
+    <EmbeddedResource Include="GUI\F_Report.resx">
+      <DependentUpon>F_Report.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\F_SelectCustomer.resx">
       <DependentUpon>F_SelectCustomer.cs</DependentUpon>
@@ -420,6 +402,7 @@
     <EmbeddedResource Include="GUI\F_SelectProduct.resx">
       <DependentUpon>F_SelectProduct.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI\report\Invoice.rdlc" />
     <EmbeddedResource Include="GUI\report\Revenue.rdlc" />
     <EmbeddedResource Include="GUI\userControl\ucAction.resx">
       <DependentUpon>ucAction.cs</DependentUpon>
@@ -436,6 +419,9 @@
     <EmbeddedResource Include="GUI\userControl\ucInvoice.resx">
       <DependentUpon>ucInvoice.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GUI\userControl\ucManufacturer.resx">
+      <DependentUpon>ucManufacturer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\userControl\ucProduct.resx">
       <DependentUpon>ucProduct.cs</DependentUpon>
     </EmbeddedResource>
@@ -445,23 +431,8 @@
     <EmbeddedResource Include="GUI\userControl\ucStatistics.resx">
       <DependentUpon>ucStatistics.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GUI\userControl\UC_CardProduct.resx">
-      <DependentUpon>UC_CardProduct.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\userControl\UC_Employee.resx">
-      <DependentUpon>UC_Employee.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\userControl\UC_Home.resx">
-      <DependentUpon>UC_Home.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\userControl\UC_NumbericUpDown.resx">
-      <DependentUpon>UC_NumbericUpDown.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\userControl\UC_Product.resx">
-      <DependentUpon>UC_Product.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\userControl\UC_SellProduct.resx">
-      <DependentUpon>UC_SellProduct.cs</DependentUpon>
+    <EmbeddedResource Include="GUI\userControl\ucCardProduct.resx">
+      <DependentUpon>ucCardProduct.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

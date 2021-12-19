@@ -1,7 +1,7 @@
 ﻿
 namespace PhanMemQuanLy.GUI.userControl
 {
-    partial class UC_CardProduct
+    partial class ucCardProduct
     {
         /// <summary> 
         /// Required designer variable.
@@ -29,7 +29,7 @@ namespace PhanMemQuanLy.GUI.userControl
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UC_CardProduct));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucCardProduct));
             this.lblName = new System.Windows.Forms.Label();
             this.picture = new System.Windows.Forms.PictureBox();
             this.lblPrice = new System.Windows.Forms.Label();

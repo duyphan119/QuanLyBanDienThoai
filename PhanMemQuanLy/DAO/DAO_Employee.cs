@@ -60,6 +60,7 @@ namespace PhanMemQuanLy.DAO
         public void insertOne(Employee employee)
         {
             cnn.Open();
+
             string query = $@"execute sp_ThemNhanVien '{employee.id}',N'{employee.name}','{employee.password}',{employee.permission}";
             scm = new SqlCommand(query, cnn);
             scm.ExecuteNonQuery();

@@ -1,56 +1,41 @@
 ﻿using PhanMemQuanLy.DAO;
-using PhanMemQuanLy.GUI;
 using PhanMemQuanLy.objects;
 using System;
-using System.Drawing;
 using System.Windows.Forms;
 
-namespace PhanMemQuanLy
+namespace PhanMemQuanLy.GUI
 {
-    public partial class fLogin : Form
+    public partial class F_Login : Form
     {
-        private Employee employee;
         private DAO_Employee dao_e = new DAO_Employee();
-        public fLogin()
+        public F_Login()
         {
             InitializeComponent();
         }
-        protected override void WndProc(ref Message m)
+        
+        private void btnLogin_Click(object sender, EventArgs e)
         {
-            base.WndProc(ref m);
-            if (m.Msg == WM_NCHITTEST)
-                m.Result = (IntPtr)(HT_CAPTION);
-        }
-
-        private const int WM_NCHITTEST = 0x84;
-        private const int HT_CLIENT = 0x1;
-        private const int HT_CAPTION = 0x2;
-
-        private void btnLogin_Click_1(object sender, EventArgs e)
-        {
-
-            employee = dao_e.getAll()[1];
-
-            new F_Main_Edited(this, employee).Visible = true;
-            Visible = false;
-        }
-
-        private void picToggleViewPassword_Click_1(object sender, EventArgs e)
-        {
-            if (txtPassword.UseSystemPasswordChar == true)
+            string id = txtId.Text;
+            string password = txtPassword.Text;
+            string error1 = "Mã nhân viên không chính xác";
+            string error2 = "Mật khẩu không chính xác";
+            Employee employee = dao_e.getById(id);
+            if (employee != null)
             {
-                picToggleViewPassword.Image = Image.FromFile(@"../../public/img/visibility.png");
+                if (employee.password == password)
+                {
+                    txtId.Text = txtPassword.Text = "";
+                    new F_Main(this, employee).Visible = true;
+                }
+                else
+                {
+                    MessageBox.Show(error2, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             else
             {
-                picToggleViewPassword.Image = Image.FromFile(@"../../public/img/view.png");
+                MessageBox.Show(error1, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            txtPassword.UseSystemPasswordChar = !txtPassword.UseSystemPasswordChar;
-        }
-
-        private void lblExit_Click(object sender, EventArgs e)
-        {
-            Close();
         }
     }
 }

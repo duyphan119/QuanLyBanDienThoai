@@ -5,28 +5,28 @@ using System.Data.SqlClient;
 
 namespace PhanMemQuanLy.DAO
 {
-    public class DAO_GroupProduct
+    public class DAO_Manufacturer
     {
         private SqlConnection cnn;
         private SqlCommand scm;
         private SqlDataReader reader;
 
-        public DAO_GroupProduct()
+        public DAO_Manufacturer()
         {
             ConnectDatabase cb = new ConnectDatabase();
             cnn = cb.Connect();
         }
 
-        public List<GroupProduct> getAll()
+        public List<Manufacturer> getAll()
         {
-            List<GroupProduct> result = new List<GroupProduct>();
+            List<Manufacturer> result = new List<Manufacturer>();
             cnn.Open();
             string query = "select * from nhanhieu";
             scm = new SqlCommand(query, cnn);
             reader = scm.ExecuteReader();
             while (reader.Read())
             {
-                GroupProduct group = new GroupProduct();
+                Manufacturer group = new Manufacturer();
                 group.id = reader.GetString(0);
                 group.name = reader.GetString(1);
                 result.Add(group);
@@ -34,7 +34,7 @@ namespace PhanMemQuanLy.DAO
             cnn.Close();
             return result;
         }
-        public GroupProduct getById(string id)
+        public Manufacturer getById(string id)
         {
             cnn.Open();
             string query = $"select * from nhanhieu where mahieu = '{id}'";
@@ -42,7 +42,7 @@ namespace PhanMemQuanLy.DAO
             reader = scm.ExecuteReader();
             if (reader.Read())
             {
-                GroupProduct group = new GroupProduct();
+                Manufacturer group = new Manufacturer();
                 group.id = reader.GetString(0);
                 group.name = reader.GetString(1);
                 cnn.Close();
@@ -52,7 +52,7 @@ namespace PhanMemQuanLy.DAO
             return null;
         }
 
-        public void insertOne(GroupProduct group)
+        public void insertOne(Manufacturer group)
         {
             cnn.Open();
             string query = $"execute sp_ThemNhanHieu '{group.id}', '{group.name}'";
@@ -61,7 +61,7 @@ namespace PhanMemQuanLy.DAO
             cnn.Close();
         }
 
-        public void updateOne(GroupProduct group)
+        public void updateOne(Manufacturer group)
         {
             cnn.Open();
             string query = $"execute sp_CapNhatNhanHieu '{group.id}', '{group.name}'";
@@ -79,16 +79,16 @@ namespace PhanMemQuanLy.DAO
             cnn.Close();
         }
 
-        public List<GroupProduct> searchByName(string keyword)
+        public List<Manufacturer> searchByName(string keyword)
         {
-            List<GroupProduct> result = new List<GroupProduct>();
+            List<Manufacturer> result = new List<Manufacturer>();
             cnn.Open();
             string query = $"select * from nhanhieu where tenhieu like '%{keyword}%'";
             scm = new SqlCommand(query, cnn);
             reader = scm.ExecuteReader();
             while (reader.Read())
             {
-                GroupProduct group = new GroupProduct();
+                Manufacturer group = new Manufacturer();
                 group.id = reader.GetString(0);
                 group.name = reader.GetString(1);
                 result.Add(group);
@@ -102,7 +102,7 @@ namespace PhanMemQuanLy.DAO
             string result = "";
             MyMethods myMethods = new MyMethods();
             int i = 1;
-            string id = myMethods.addZeros(length, i);
+            string id = "G" + myMethods.addZeros(length, i);
             while (true)
             {
                 if (getById(id) == null)
@@ -112,7 +112,7 @@ namespace PhanMemQuanLy.DAO
                 }
                 else
                 {
-                    id = myMethods.addZeros(length, ++i);
+                    id = "G" +  myMethods.addZeros(length, ++i);
                 }
             }
             return result;

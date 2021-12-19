@@ -8,7 +8,7 @@ namespace PhanMemQuanLy.objects
         public string name, color, memorySpace, image;
         public int quantity;
         public decimal price;
-        public GroupProduct group;
+        public Manufacturer group;
         
 
         public Product()

@@ -9,12 +9,12 @@ namespace PhanMemQuanLy.GUI.userControl
 {
     public partial class ucAction : UserControl
     {
-        private F_Main_Edited parentComponent;
+        private F_Main parentComponent;
         public ucAction()
         {
             InitializeComponent();
         }
-        public ucAction(F_Main_Edited f)
+        public ucAction(F_Main f)
         {
             InitializeComponent();
             parentComponent = f;
