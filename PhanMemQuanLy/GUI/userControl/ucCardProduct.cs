@@ -28,7 +28,7 @@ namespace PhanMemQuanLy.GUI.userControl
             return name;
         }
 
-        public ucCardProduct(F_SelectProduct f, List<OrderDetail> orderDetails, string productName)
+        public ucCardProduct(F_SelectProduct f, string a, List<OrderDetail> orderDetails, string productName)
         {
             InitializeComponent();
             preComponent = f;
@@ -47,7 +47,10 @@ namespace PhanMemQuanLy.GUI.userControl
                 int index = orderDetails.FindIndex(ord => ord.product.id == product.id);
                 if(index != -1)
                 {
-                    product.quantity -= orderDetails[index].quantity;
+                    if(a == "")
+                    {
+                        product.quantity -= orderDetails[index].quantity;
+                    }
                 }
                 products.Add(product);
             });
@@ -59,7 +62,7 @@ namespace PhanMemQuanLy.GUI.userControl
             int index = products.FindIndex(p => p.memorySpace == cbSpace.Text && p.color == cbColor.Text);
             if(index != -1)
             {
-                if(products[index].quantity > 1)
+                if(products[index].quantity >= 1)
                 {
                     products[index].quantity -= 1;
                     OrderDetail orderDetail = new OrderDetail()
@@ -82,7 +85,8 @@ namespace PhanMemQuanLy.GUI.userControl
             if (product != null)
             {
                 product.quantity -= step;
-                lblName.Text = $"{product.name} (Còn: {product.quantity})";
+                if(product.color == cbColor.Text && product.memorySpace == cbSpace.Text)
+                    lblName.Text = $"{product.name} (Còn: {product.quantity})";
             }
         }
 

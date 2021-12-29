@@ -95,17 +95,18 @@ namespace PhanMemQuanLy.GUI
             try
             {
                 decimal phone = Convert.ToDecimal(txtPhone.Text);
+                if (txtPhone.Text.Length < 10)
+                {
+                    error += "Số điện thoại chỉ có 10 số\n";
+                }
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
-                error += "Số điện thoại chứa kí tự không hợp lệ\n";
+                error += "Số điện thoại không hợp lệ\n";
             }
 
-            if (txtPhone.Text.Length < 10)
-            {
-                error += "Số điện thoại chỉ có 10 số\n";
-            }
+            
             return error;
         }
         public Customer getData()
@@ -162,6 +163,40 @@ namespace PhanMemQuanLy.GUI
                 }
                 reset();
             }
+        }
+
+        private void dgvCustomer_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int index = e.RowIndex;
+            if(index != -1)
+            {
+                Customer customer = dao_c.getById(dgvCustomer.Rows[index].Cells[0].Value.ToString());
+                if(customer != null)
+                {
+                    if(txtId.Text == "")
+                    {
+                        txtId.Text = customer.id;
+                    }
+                    txtName.Text = customer.name;
+                    txtAddress.Text = customer.address;
+                    txtPhone.Text = customer.phone;
+                }
+            }
+        }
+
+        private void txtKeyword_TextChanged(object sender, EventArgs e)
+        {
+            dgvCustomer.Rows.Clear();
+            dao_c.searchByName(txtKeyword.Text).ForEach(customer =>
+            {
+                dgvCustomer.Rows.Add(new object[]
+                {
+                    customer.id,
+                    customer.name,
+                    customer.address,
+                    customer.phone
+                });
+            });
         }
     }
 }

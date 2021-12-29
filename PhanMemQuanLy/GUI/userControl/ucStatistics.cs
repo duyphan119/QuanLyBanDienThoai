@@ -3,12 +3,7 @@ using PhanMemQuanLy.DAO;
 using PhanMemQuanLy.objects;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PhanMemQuanLy.GUI.userControl
@@ -17,26 +12,29 @@ namespace PhanMemQuanLy.GUI.userControl
     {
         private DAO_Revenue dao_r = new DAO_Revenue();
         private DataTable table = new DataTable();
+        private string titleStatistics = "";
         public ucStatistics()
         {
             InitializeComponent();
-
+            Dock = DockStyle.Fill;
             table.Columns.Add("time", typeof(string));
             table.Columns.Add("value", typeof(decimal));
             cbFilter.SelectedIndex = 0;
+            statistics(dateTime.Value);
+            lblInventory.Text = $"{dao_r.countProductSelledAll()}";
         }
 
-        public void loadReport(string title)
+        public void statistics(DateTime date)
         {
-            rpvStatistics.LocalReport.ReportPath = @"..\..\GUI\report\Revenue.rdlc";
-            ReportDataSource rds = new ReportDataSource();
-            rds.Name = "RevenueDataSet";
-            rds.Value = table;
-            ReportParameter rptTitle = new ReportParameter("title", title);
-            rpvStatistics.LocalReport.SetParameters(new ReportParameter[] { rptTitle });
-            rpvStatistics.LocalReport.DataSources.Clear();
-            rpvStatistics.LocalReport.DataSources.Add(rds);
-            rpvStatistics.RefreshReport();
+            decimal dayRevenue = dao_r.getRevenueOfDate(date);
+            lblDayRevenue.Text = $"{dayRevenue.ToString("#,##")}d";
+            lblTitleDay.Text = $"Ngày {date.Day}";
+            decimal monthRevenue = dao_r.getRevenueOfMonth(date);
+            lblMonthRevenue.Text = $"{monthRevenue.ToString("#,##")}d";
+            lblTitleMonth.Text = $"Tháng {date.Month}";
+            decimal yearRevenue = dao_r.getRevenueOfYear(date);
+            lblYearRevenue.Text = $"{yearRevenue.ToString("#,##")}d";
+            lblTitleYear.Text = $"Năm {date.Year}";
         }
 
         public void daysOfWeek()
@@ -57,8 +55,7 @@ namespace PhanMemQuanLy.GUI.userControl
                     table.Rows.Add("Chủ Nhật", item.value);
                 }
             });
-            string title = "Doanh Thu Các Ngày Trong Tuần";
-            loadReport(title);
+            titleStatistics = "Doanh Thu Các Ngày Trong Tuần";
         }
 
         public void daysOfMonth()
@@ -70,8 +67,8 @@ namespace PhanMemQuanLy.GUI.userControl
             {
                 table.Rows.Add(item.time, item.value);
             });
-            string title = $"Doanh Thu Các Ngày Trong Tháng {Now.Month}";
-            loadReport(title);
+            titleStatistics = $"Doanh Thu Các Ngày Trong Tháng {Now.Month}";
+            
         }
         public void monthsOfYear()
         {
@@ -82,8 +79,8 @@ namespace PhanMemQuanLy.GUI.userControl
             {
                 table.Rows.Add(item.time, item.value);
             });
-            string title = $"Doanh Thu Các Tháng Trong Năm {Now.Year}";
-            loadReport(title);
+            titleStatistics = $"Doanh Thu Các Tháng Trong Năm {Now.Year}";
+            
         }
         public void quartersOfYear()
         {
@@ -94,8 +91,8 @@ namespace PhanMemQuanLy.GUI.userControl
             {
                 table.Rows.Add(item.time, item.value);
             });
-            string title = $"Doanh Thu Các Quý Trong Năm {Now.Year}";
-            loadReport(title);
+            titleStatistics = $"Doanh Thu Các Quý Trong Năm {Now.Year}";
+            
         }
         public void Years(int num)
         {
@@ -106,8 +103,8 @@ namespace PhanMemQuanLy.GUI.userControl
             {
                 table.Rows.Add(item.time, item.value);
             });
-            string title = $"Doanh Thu {num} Năm Gần Đây";
-            loadReport(title);
+            titleStatistics = $"Doanh Thu {num} Năm Gần Đây";
+            
         }
         public void filter(int type)
         {
@@ -137,6 +134,16 @@ namespace PhanMemQuanLy.GUI.userControl
             {
                 filter(cbFilter.SelectedIndex);
             }
+        }
+
+        private void dateTime_ValueChanged(object sender, EventArgs e)
+        {
+            statistics(dateTime.Value);
+        }
+
+        private void btnView_Click(object sender, EventArgs e)
+        {
+            new F_Report(titleStatistics, table).Visible = true;
         }
     }
 }

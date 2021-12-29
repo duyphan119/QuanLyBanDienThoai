@@ -24,6 +24,7 @@ namespace PhanMemQuanLy.GUI.userControl
         {
             InitializeComponent();
             Dock = DockStyle.Fill;
+            cbFilter.SelectedIndex = 0;
         }
         public void reset()
         {
@@ -90,18 +91,18 @@ namespace PhanMemQuanLy.GUI.userControl
                     );
                     if (answer == DialogResult.Yes)
                     {
-                        int index_product = products.FindIndex(employee => employee.id == dgvProduct.Rows[index].Cells[0].Value.ToString());
+                        int index_product = products.FindIndex(product => product.id == dgvProduct.Rows[index].Cells[0].Value.ToString());
                         if (index_product != -1)
                         {
                             dao_p.deleteOne(products[index_product].id);
                             dgvProduct.Rows.RemoveAt(index);
+                            cbId.Items.Remove(products[index_product].id);
                             products.RemoveAt(index_product);
-                            cbId.Items.RemoveAt(index_product);
                         }
                     }
                 }
             }
-            dgvProduct.ClearSelection();
+            
         }
         public void refresh()
         {
@@ -140,9 +141,9 @@ namespace PhanMemQuanLy.GUI.userControl
             {
                 error += "Chưa chọn nhãn hiệu\n";
             }
-            if (numQuantity.Value == 0)
+            if (numQuantity.Value < 0)
             {
-                error += "Số lượng > 0\n";
+                error += "Số lượng >= 0\n";
             }
             if (numPrice.Value == 0)
             {
@@ -223,8 +224,8 @@ namespace PhanMemQuanLy.GUI.userControl
                 {
                     EditProduct(product);
                 }
-                reset();
-                dgvProduct.ClearSelection();
+                //reset();
+                
             }
         }
         public void addToDGV(Product product)
@@ -243,6 +244,7 @@ namespace PhanMemQuanLy.GUI.userControl
 
         public void formLoad()
         {
+            dgvProduct.Rows.Clear();
             dao_g.getAll().ForEach(group =>
             {
                 groups.Add(group);
@@ -255,7 +257,7 @@ namespace PhanMemQuanLy.GUI.userControl
                 cbId.Items.Add(product.id);
                 addToDGV(product);
             });
-            dgvProduct.ClearSelection();
+            
         }
         private void ucProduct_Load(object sender, EventArgs e)
         {
@@ -346,6 +348,33 @@ namespace PhanMemQuanLy.GUI.userControl
         private void cbGroup_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = true;
+        }
+
+        public void search()
+        {
+            dgvProduct.Rows.Clear();
+            if(cbFilter.SelectedIndex == 0)
+            {
+                dao_p.searchById(txtKeyword.Text).ForEach(product =>
+                {
+                    addToDGV(product);
+                });
+            }else if (cbFilter.SelectedIndex == 1)
+            {
+                dao_p.searchByName(txtKeyword.Text).ForEach(product =>
+                {
+                    addToDGV(product);
+                });
+            }
+        }
+        private void cbFilter_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            search();
+        }
+
+        private void txtKeyword_TextChanged(object sender, EventArgs e)
+        {
+            search();
         }
     }
 }

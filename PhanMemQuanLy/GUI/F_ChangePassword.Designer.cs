@@ -113,18 +113,22 @@ namespace PhanMemQuanLy.GUI
             // 
             this.btnChange.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnChange.Location = new System.Drawing.Point(147, 307);
+            this.btnChange.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.btnChange.FlatAppearance.BorderSize = 0;
+            this.btnChange.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnChange.Location = new System.Drawing.Point(147, 316);
             this.btnChange.Name = "btnChange";
             this.btnChange.Size = new System.Drawing.Size(118, 36);
             this.btnChange.TabIndex = 76;
             this.btnChange.Text = "Đổi Mật Khẩu";
-            this.btnChange.UseVisualStyleBackColor = true;
+            this.btnChange.UseVisualStyleBackColor = false;
             this.btnChange.Click += new System.EventHandler(this.btnChange_Click);
             // 
             // F_ChangePassword
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(412, 368);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.ClientSize = new System.Drawing.Size(412, 389);
             this.Controls.Add(this.btnChange);
             this.Controls.Add(this.txtConfirmNewPassword);
             this.Controls.Add(this.label3);

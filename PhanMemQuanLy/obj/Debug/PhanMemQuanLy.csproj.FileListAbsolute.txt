@@ -138,7 +138,6 @@ D:\Documents\DoAnLTTQ\PhanMemQuanLy\PhanMemQuanLy\obj\Debug\PhanMemQuanLy.GUI.us
 D:\Documents\DoAnTKCSDL\GiaoDien\PhanMemQuanLy\PhanMemQuanLy\bin\Debug\PhanMemQuanLy.exe.config
 D:\Documents\DoAnTKCSDL\GiaoDien\PhanMemQuanLy\PhanMemQuanLy\bin\Debug\PhanMemQuanLy.exe
 D:\Documents\DoAnTKCSDL\GiaoDien\PhanMemQuanLy\PhanMemQuanLy\bin\Debug\PhanMemQuanLy.pdb
-D:\Documents\DoAnTKCSDL\GiaoDien\PhanMemQuanLy\PhanMemQuanLy\bin\Debug\Guna.UI2.dll
 D:\Documents\DoAnTKCSDL\GiaoDien\PhanMemQuanLy\PhanMemQuanLy\bin\Debug\JetBrains.Annotations.dll
 D:\Documents\DoAnTKCSDL\GiaoDien\PhanMemQuanLy\PhanMemQuanLy\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
 D:\Documents\DoAnTKCSDL\GiaoDien\PhanMemQuanLy\PhanMemQuanLy\bin\Debug\Microsoft.Extensions.Configuration.Abstractions.dll
@@ -269,12 +268,10 @@ D:\Documents\DoAnTKCSDL\GiaoDien\PhanMemQuanLy\PhanMemQuanLy\obj\Debug\PhanMemQu
 D:\Documents\DoAnTKCSDL\GiaoDien\PhanMemQuanLy\PhanMemQuanLy\obj\Debug\PhanMemQuanLy.csproj.CopyComplete
 D:\Documents\DoAnTKCSDL\GiaoDien\PhanMemQuanLy\PhanMemQuanLy\obj\Debug\PhanMemQuanLy.exe
 D:\Documents\DoAnTKCSDL\GiaoDien\PhanMemQuanLy\PhanMemQuanLy\obj\Debug\PhanMemQuanLy.pdb
-D:\Documents\DoAnTKCSDL\GiaoDien\PhanMemQuanLy\PhanMemQuanLy\obj\Debug\PhanMemQuanLy.GUI.F_Main_Edited.resources
 D:\Documents\DoAnTKCSDL\GiaoDien\PhanMemQuanLy\PhanMemQuanLy\obj\Debug\PhanMemQuanLy.GUI.userControl.ucEmployee.resources
 D:\Documents\DoAnTKCSDL\GiaoDien\PhanMemQuanLy\PhanMemQuanLy\obj\Debug\PhanMemQuanLy.GUI.userControl.ucAction.resources
 D:\Documents\DoAnTKCSDL\GiaoDien\PhanMemQuanLy\PhanMemQuanLy\obj\Debug\PhanMemQuanLy.GUI.userControl.ucProduct.resources
 D:\Documents\DoAnTKCSDL\GiaoDien\PhanMemQuanLy\PhanMemQuanLy\obj\Debug\PhanMemQuanLy.GUI.userControl.ucCustomer.resources
-D:\Documents\DoAnTKCSDL\GiaoDien\PhanMemQuanLy\PhanMemQuanLy\obj\Debug\PhanMemQuanLy.GUI.userControl.ucHome.resources
 D:\Documents\DoAnTKCSDL\GiaoDien\PhanMemQuanLy\PhanMemQuanLy\obj\Debug\PhanMemQuanLy.GUI.userControl.ucInvoice.resources
 D:\Documents\DoAnTKCSDL\GiaoDien\PhanMemQuanLy\PhanMemQuanLy\obj\Debug\PhanMemQuanLy.GUI.F_SelectProduct.resources
 D:\Documents\DoAnTKCSDL\GiaoDien\PhanMemQuanLy\PhanMemQuanLy\obj\Debug\PhanMemQuanLy.GUI.userControl.ucProductSelected.resources
@@ -344,4 +341,5 @@ D:\Documents\DoAnTKCSDL\GiaoDien\PhanMemQuanLy\PhanMemQuanLy\obj\Debug\PhanMemQu
 D:\Documents\DoAnTKCSDL\GiaoDien\PhanMemQuanLy\PhanMemQuanLy\obj\Debug\PhanMemQuanLy.GUI.F_Report.resources
 D:\Documents\DoAnTKCSDL\GiaoDien\PhanMemQuanLy\PhanMemQuanLy\obj\Debug\PhanMemQuanLy.GUI.F_ChangePassword.resources
 D:\Documents\DoAnTKCSDL\GiaoDien\PhanMemQuanLy\PhanMemQuanLy\obj\Debug\PhanMemQuanLy.GUI.userControl.ucManufacturer.resources
-D:\Documents\DoAnTKCSDL\GiaoDien\PhanMemQuanLy\PhanMemQuanLy\obj\Debug\PhanMemQuanLy.GUI.F_Login_Edited.resources
+D:\Documents\DoAnTKCSDL\GiaoDien\PhanMemQuanLy\PhanMemQuanLy\obj\Debug\PhanMemQuanLy.GUI.F_Login.resources
+D:\Documents\DoAnTKCSDL\GiaoDien\PhanMemQuanLy\PhanMemQuanLy\obj\Debug\PhanMemQuanLy.GUI.F_Main.resources

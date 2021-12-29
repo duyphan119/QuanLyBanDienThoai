@@ -45,8 +45,6 @@ namespace PhanMemQuanLy.GUI.userControl
                 cbId.Items.Add(invoice.id);
                 addToDGV(invoice);
             });
-
-            dgvInvoice.ClearSelection();
         }
 
         private void ucInvoice_Load(object sender, EventArgs e)
@@ -71,7 +69,6 @@ namespace PhanMemQuanLy.GUI.userControl
                     });
                     txtPrice.Text = $"{(totalPrice == 0 ? "0" : totalPrice.ToString("#,##"))}đ";
                 }
-               
             }
         }
 
@@ -97,7 +94,15 @@ namespace PhanMemQuanLy.GUI.userControl
 
         private void btnSelectProduct_Click(object sender, EventArgs e)
         {
-            new F_SelectProduct(this, cbId.Text, orderDetails).Visible = true;
+            if(action == ADD)
+            {
+                new F_SelectProduct(this, "", cbId.Text, orderDetails).Visible = true;
+            }
+            else
+            {
+                new F_SelectProduct(this, action, cbId.Text, orderDetails).Visible = true;
+            }
+            
             btnSelectProduct.Enabled = false;
         }
 
@@ -189,7 +194,7 @@ namespace PhanMemQuanLy.GUI.userControl
                     }
                 }
             }
-            dgvInvoice.ClearSelection();
+            
         }
 
         public void refresh()
@@ -235,66 +240,23 @@ namespace PhanMemQuanLy.GUI.userControl
             Invoice invoice = getData();
             if(invoice != null)
             {
-                if(action == ADD)
+                int totalProduct = 0;
+                for (int i = 0; i < invoice.list.Count; i++)
                 {
-                    dao_i.insertOne(invoice);
-                    dgvInvoice.Rows.Add(new object[]
-                    {
-                        invoice.id,
-                        invoice.date.ToString("dd/MM/yyyy"),
-                        invoice.customer.name,
-                        invoice.getTotal().ToString("#,##"),
-                        invoice.employee.name
-                    });
-                    cbId.Items.Add(invoice.id);
-                    invoices.Add(invoice);
-                    cbId.Text = dao_i.generateID(lengthID);
+                    totalProduct += invoice.list[i].quantity;
                 }
-                else if(action == EDIT)
-                {
-                    dao_i.updateOne(invoice);
-                    for(int i = 0; i < dgvInvoice.RowCount; i++)
-                    {
-                        if(invoice.id == dgvInvoice.Rows[i].Cells[0].Value.ToString())
-                        {
-                            dgvInvoice.Rows[i].Cells[1].Value = invoice.date.ToString("dd/MM/yyyy");
-                            dgvInvoice.Rows[i].Cells[2].Value = invoice.customer.name;
-                            dgvInvoice.Rows[i].Cells[3].Value = invoice.getTotal().ToString("#,##");
-                            dgvInvoice.Rows[i].Cells[4].Value = invoice.employee.name;
-                        }
-                    }
-                    cbId.Text = "";
-                }
-                reset();
-                dgvInvoice.ClearSelection();
-            }
-        }
-
-        private void btnExport_Click(object sender, EventArgs e)
-        {
-            if(action != "")
-            {
-                DataTable table = new DataTable();
-                table.Columns.Add("masp", typeof(string));
-                table.Columns.Add("tensp", typeof(string));
-                table.Columns.Add("mausac", typeof(string));
-                table.Columns.Add("bonhotrong", typeof(string));
-                table.Columns.Add("soluong", typeof(int));
-                table.Columns.Add("giaban", typeof(decimal));
-
-                Invoice invoice = getData();
-                if (invoice != null)
+                if(totalProduct > 0)
                 {
                     if (action == ADD)
                     {
                         dao_i.insertOne(invoice);
                         dgvInvoice.Rows.Add(new object[]
                         {
-                        invoice.id,
-                        invoice.date.ToString("dd/MM/yyyy"),
-                        invoice.customer.name,
-                        invoice.getTotal().ToString("#,##"),
-                        invoice.employee.name
+                            invoice.id,
+                            invoice.date.ToString("dd/MM/yyyy"),
+                            invoice.customer.name,
+                            invoice.getTotal().ToString("#,##"),
+                            invoice.employee.name
                         });
                         cbId.Items.Add(invoice.id);
                         invoices.Add(invoice);
@@ -316,14 +278,83 @@ namespace PhanMemQuanLy.GUI.userControl
                         cbId.Text = "";
                     }
                     reset();
-                    dgvInvoice.ClearSelection();
+                    MessageBox.Show("Lưu Thành Công");
                 }
-                invoice.list.ForEach(od =>
+                else
                 {
-                    table.Rows.Add(od.product.id, od.product.name, od.product.color, od.product.memorySpace, od.quantity, od.product.price);
-                });
+                    MessageBox.Show("Hoá đơn chưa có sản phẩm", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
 
-                new F_Report(invoice, table).Visible = true;
+        public void exportInvoice()
+        {
+            if(dgvInvoice.SelectedRows.Count > 0)
+            {
+                DataTable table = new DataTable();
+                table.Columns.Add("masp", typeof(string));
+                table.Columns.Add("tensp", typeof(string));
+                table.Columns.Add("mausac", typeof(string));
+                table.Columns.Add("bonhotrong", typeof(string));
+                table.Columns.Add("soluong", typeof(int));
+                table.Columns.Add("giaban", typeof(decimal));
+                Invoice invoice = dao_i.getById(dgvInvoice.Rows[dgvInvoice.SelectedRows[0].Index].Cells[0].Value.ToString());
+                if (invoice != null)
+                {
+                    int totalProduct = 0;
+                    for (int i = 0; i < invoice.list.Count; i++)
+                    {
+                        totalProduct += invoice.list[i].quantity;
+                    }
+                    if (totalProduct > 0)
+                    {
+                        invoice.list.ForEach(od =>
+                        {
+                            table.Rows.Add(od.product.id, od.product.name, od.product.color, od.product.memorySpace, od.quantity, od.product.price);
+                        });
+                        new F_Report(invoice, table).Visible = true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Hoá đơn chưa có sản phẩm", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
+        private void btnExport_Click(object sender, EventArgs e)
+        {
+            if(action != "")
+            {
+                exportInvoice();
+            }
+        }
+
+        private void dateTime_ValueChanged(object sender, EventArgs e)
+        {
+            if (DateTime.Compare(DateTime.Now, dateTime.Value) < 0)
+            {
+                MessageBox.Show("Không được ngày lớn hơn ngày hiện tại", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                dateTime.Value = DateTime.Now;
+            }
+        }
+
+        private void dgvInvoice_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int index = e.RowIndex;
+            if(index != -1 && action == EDIT)
+            {
+                string id = dgvInvoice.Rows[index].Cells[0].Value.ToString();
+                if(action == EDIT)
+                {
+                    Invoice invoice = dao_i.getById(id);
+                    if(invoice != null)
+                    {
+                        cbId.Text = invoice.id;
+                        dateTime.Value = invoice.date;
+                        lblInfoCustomer.Text = $"Khách hàng: {invoice.customer.name}";
+                    }
+                }
             }
         }
     }

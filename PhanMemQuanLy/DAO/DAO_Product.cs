@@ -22,7 +22,7 @@ namespace PhanMemQuanLy.DAO
         {
             int result = 0;
             cnn.Open();
-            scm = new SqlCommand($@"select soluong from sanpham where masp = '{productId}'", cnn);
+            scm = new SqlCommand($@"execute sp_LayTonKhoCuaSanPham '{productId}'", cnn);
             reader = scm.ExecuteReader();
             if (reader.Read())
             {
@@ -36,7 +36,7 @@ namespace PhanMemQuanLy.DAO
             List<Product> result = new List<Product>();
             cnn.Open();
             DAO_Manufacturer dao_g = new DAO_Manufacturer();
-            string query = "select masp, tensp, mausac, bonhotrong, soluong, giaban, hinhanh, mahieu from sanpham";
+            string query = "execute sp_LayTatCaSanPham";
             scm = new SqlCommand(query, cnn);
             reader = scm.ExecuteReader();
             while (reader.Read())
@@ -63,7 +63,7 @@ namespace PhanMemQuanLy.DAO
             List<Product> result = new List<Product>();
             cnn.Open();
             DAO_Manufacturer dao_g = new DAO_Manufacturer();
-            string query = $"select masp, tensp, mausac, bonhotrong, soluong, giaban, hinhanh, mahieu from sanpham where tensp = N'{name}'";
+            string query = $"execute sp_LayTatCaSanPhamTheoTen N'{name}'";
             scm = new SqlCommand(query, cnn);
             reader = scm.ExecuteReader();
             while (reader.Read())
@@ -88,55 +88,75 @@ namespace PhanMemQuanLy.DAO
         public List<Product> getByGroup(string groupId)
         {
             List<Product> result = new List<Product>();
-            cnn.Open();
-            DAO_Manufacturer dao_g = new DAO_Manufacturer();
-            string query = $"select masp, tensp, mausac, bonhotrong, soluong, giaban, hinhanh, mahieu from sanpham where mahieu = '{groupId}'";
-            scm = new SqlCommand(query, cnn);
-            reader = scm.ExecuteReader();
-            while (reader.Read())
+            try
             {
-                Product product = new Product()
+                cnn.Open();
+                DAO_Manufacturer dao_g = new DAO_Manufacturer();
+                string query = $"execute sp_LayTatCaSanPhamTheoMaNSX '{groupId}'";
+                scm = new SqlCommand(query, cnn);
+                reader = scm.ExecuteReader();
+                while (reader.Read())
                 {
-                    id = reader.GetString(0),
-                    name = reader.GetString(1),
-                    color = reader.GetString(2),
-                    memorySpace = reader.GetString(3),
-                    quantity = reader.GetInt32(4),
-                    price = reader.GetDecimal(5),
-                    image = reader.GetString(6),
-                    group = dao_g.getById(reader.GetString(7))
-                };
-                result.Add(product);
+                    Product product = new Product()
+                    {
+                        id = reader.GetString(0),
+                        name = reader.GetString(1),
+                        color = reader.GetString(2),
+                        memorySpace = reader.GetString(3),
+                        quantity = reader.GetInt32(4),
+                        price = reader.GetDecimal(5),
+                        image = reader.GetString(6),
+                        group = dao_g.getById(reader.GetString(7))
+                    };
+                    result.Add(product);
+                }
             }
-            cnn.Close();
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            finally
+            {
+                cnn.Close();
+            }
             return result;
         }
 
         public Product getById(string id)
         {
-            cnn.Open();
-            DAO_Manufacturer dao_g = new DAO_Manufacturer();
-            string query = $"select masp, tensp, mausac, bonhotrong, soluong, giaban, hinhanh, mahieu from sanpham where masp = '{id}'";
-            scm = new SqlCommand(query, cnn);
-            reader = scm.ExecuteReader();
-            if (reader.Read())
+            Product product = null;
+            try
             {
-                Product product = new Product()
+                cnn.Open();
+                DAO_Manufacturer dao_g = new DAO_Manufacturer();
+                string query = $"execute sp_LayTatCaSanPhamTheoMa '{id}'";
+                scm = new SqlCommand(query, cnn);
+                reader = scm.ExecuteReader();
+                if (reader.Read())
                 {
-                    id = reader.GetString(0),
-                    name = reader.GetString(1),
-                    color = reader.GetString(2),
-                    memorySpace = reader.GetString(3),
-                    quantity = reader.GetInt32(4),
-                    price = reader.GetDecimal(5),
-                    image = reader.GetString(6),
-                    group = dao_g.getById(reader.GetString(7))
-                };
-                cnn.Close();
-                return product;
+                    product = new Product()
+                    {
+                        id = reader.GetString(0),
+                        name = reader.GetString(1),
+                        color = reader.GetString(2),
+                        memorySpace = reader.GetString(3),
+                        quantity = reader.GetInt32(4),
+                        price = reader.GetDecimal(5),
+                        image = reader.GetString(6),
+                        group = dao_g.getById(reader.GetString(7))
+                    };
+                }
             }
-            cnn.Close();
-            return null;
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            finally
+            {
+                cnn.Close();
+            }
+            
+            return product;
         }
 
         public void insertOne(Product product)
@@ -148,12 +168,14 @@ namespace PhanMemQuanLy.DAO
                 '{product.image}', N'{product.color}', '{product.memorySpace}', {product.quantity},
                 {product.price}, '{product.group.id}'", cnn);
                 scm.ExecuteNonQuery();
-                cnn.Close();
             }
             catch(Exception ex)
             {
-                cnn.Close();
                 Console.WriteLine(ex);
+            }
+            finally
+            {
+                cnn.Close();
             }
         }
 
@@ -166,12 +188,14 @@ namespace PhanMemQuanLy.DAO
                 '{product.image}', N'{product.color}', '{product.memorySpace}', {product.quantity},
                 {product.price}, '{product.group.id}'", cnn);
                 scm.ExecuteNonQuery();
-                cnn.Close();
             }
             catch (Exception ex)
             {
-                cnn.Close();
                 Console.WriteLine(ex);
+            }
+            finally
+            {
+                cnn.Close();
             }
         }
 
@@ -182,42 +206,90 @@ namespace PhanMemQuanLy.DAO
                 cnn.Open();
                 scm = new SqlCommand($"execute sp_XoaSanPham '{id}'", cnn);
                 scm.ExecuteNonQuery();
-                cnn.Close();
             }
             catch (Exception ex)
             {
-                cnn.Close();
                 Console.WriteLine(ex);
             }
+            finally
+            {
+                cnn.Close();
+            }
+        }
+
+        public List<Product> searchById(string keyword)
+        {
+            List<Product> result = new List<Product>();
+            try
+            {
+                cnn.Open();
+                DAO_Manufacturer dao_g = new DAO_Manufacturer();
+                string query = $"execute sp_TimKiemSanPhamTheoMa '%{keyword}%'";
+                scm = new SqlCommand(query, cnn);
+                reader = scm.ExecuteReader();
+                while (reader.Read())
+                {
+                    Product product = new Product()
+                    {
+                        id = reader.GetString(0),
+                        name = reader.GetString(1),
+                        color = reader.GetString(2),
+                        memorySpace = reader.GetString(3),
+                        quantity = reader.GetInt32(4),
+                        price = reader.GetDecimal(5),
+                        image = reader.GetString(6),
+                        group = dao_g.getById(reader.GetString(7))
+                    };
+                    result.Add(product);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            finally
+            {
+                cnn.Close();
+            }
+            return result;
         }
 
         public List<Product> searchByName(string keyword)
         {
             List<Product> result = new List<Product>();
-            cnn.Open();
-            DAO_Manufacturer dao_g = new DAO_Manufacturer();
-            string query = $"select masp, tensp, mausac, bonhotrong, soluong, giaban, hinhanh, mahieu from sanpham where tensp like N'%{keyword}%'";
-            scm = new SqlCommand(query, cnn);
-            reader = scm.ExecuteReader();
-            while (reader.Read())
+            try
             {
-                Product product = new Product()
+                cnn.Open();
+                DAO_Manufacturer dao_g = new DAO_Manufacturer();
+                string query = $"execute sp_TimKiemSanPhamTheoTen N'%{keyword}%'";
+                scm = new SqlCommand(query, cnn);
+                reader = scm.ExecuteReader();
+                while (reader.Read())
                 {
-                    id = reader.GetString(0),
-                    name = reader.GetString(1),
-                    color = reader.GetString(2),
-                    memorySpace = reader.GetString(3),
-                    quantity = reader.GetInt32(4),
-                    price = reader.GetDecimal(5),
-                    image = reader.GetString(6),
-                    group = dao_g.getById(reader.GetString(7))
-                };
-                result.Add(product);
+                    Product product = new Product()
+                    {
+                        id = reader.GetString(0),
+                        name = reader.GetString(1),
+                        color = reader.GetString(2),
+                        memorySpace = reader.GetString(3),
+                        quantity = reader.GetInt32(4),
+                        price = reader.GetDecimal(5),
+                        image = reader.GetString(6),
+                        group = dao_g.getById(reader.GetString(7))
+                    };
+                    result.Add(product);
+                }
             }
-            cnn.Close();
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            finally
+            {
+                cnn.Close();
+            }
             return result;
         }
-
 
         public string generateID(int length)
         {

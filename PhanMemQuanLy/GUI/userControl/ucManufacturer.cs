@@ -24,17 +24,18 @@ namespace PhanMemQuanLy.GUI.userControl
         {
             InitializeComponent();
             Dock = DockStyle.Fill;
+            cbFilter.SelectedIndex = 0;
         }
 
         private void ucManufacturer_Load(object sender, EventArgs e)
         {
+            dgvManufacturer.Rows.Clear();
             dao_m.getAll().ForEach(manufacturer =>
             {
                 manufacturers.Add(manufacturer);
                 cbId.Items.Add(manufacturer.id);
                 addToDGV(manufacturer);
             });
-            dgvManufacturer.ClearSelection();
         }
 
         public void addToDGV(Manufacturer manufacturer)
@@ -101,7 +102,7 @@ namespace PhanMemQuanLy.GUI.userControl
                     }
                 }
             }
-            dgvManufacturer.ClearSelection();
+            
         }
 
         public void AddEmployee(Manufacturer manufacturer)
@@ -168,7 +169,7 @@ namespace PhanMemQuanLy.GUI.userControl
             txtName.Enabled = (false);
             cbId.Text = "";
             cbId.Enabled = false;
-            dgvManufacturer.ClearSelection();
+            
         }
         public void save()
         {
@@ -184,7 +185,7 @@ namespace PhanMemQuanLy.GUI.userControl
                     EditEmployee(manufacturer);
                 }
                 txtName.Text = "";
-                dgvManufacturer.ClearSelection();
+                
             }
         }
 
@@ -198,6 +199,40 @@ namespace PhanMemQuanLy.GUI.userControl
                     txtName.Text = manufacturer.name;
                 }
             }
+        }
+
+        private void txtKeyword_TextChanged(object sender, EventArgs e)
+        {
+            search();
+        }
+
+        public void search()
+        {
+            dgvManufacturer.Rows.Clear();
+            if(cbFilter.SelectedIndex == 0)
+            {
+                dao_m.searchById(txtKeyword.Text).ForEach(manufacturer =>
+                {
+                    addToDGV(manufacturer);
+                });
+            }
+            else if (cbFilter.SelectedIndex == 0)
+            {
+                dao_m.searchByName(txtKeyword.Text).ForEach(manufacturer =>
+                {
+                    addToDGV(manufacturer);
+                });
+            }
+        }
+
+        private void cbFilter_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void cbFilter_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            search();
         }
     }
 }

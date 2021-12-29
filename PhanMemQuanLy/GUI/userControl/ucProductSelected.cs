@@ -44,6 +44,7 @@ namespace PhanMemQuanLy.GUI.userControl
                 int step = newQuantity - orderDetail.quantity;
                 orderDetail.quantity = newQuantity;
                 decimal total = orderDetail.getTotal();
+                numQuantity.Value = newQuantity;
                 txtPrice.Text = $"{((total == 0) ? "0" : total.ToString("#,##"))}đ";
                 preComponent.capNhatTongTien(this, orderDetail);
                 if(card != null)

@@ -18,6 +18,7 @@ namespace PhanMemQuanLy.GUI.userControl
         {
             InitializeComponent();
             Dock = DockStyle.Fill;
+            cbFilter.SelectedIndex = 0;
         }
         public void add()
         {
@@ -38,7 +39,7 @@ namespace PhanMemQuanLy.GUI.userControl
         public void edit()
         {
             reset();
-            if (action == "")
+            if (action != EDIT)
             {
                 action = EDIT;
             }
@@ -64,7 +65,7 @@ namespace PhanMemQuanLy.GUI.userControl
                     EditCustomer(customer);
                 }
                 reset();
-                dgvCustomer.ClearSelection();
+                
             }
         }
         public void refresh()
@@ -73,7 +74,7 @@ namespace PhanMemQuanLy.GUI.userControl
             setEnabled(false);
             cbId.Text = "";
             cbId.Enabled = false;
-            dgvCustomer.ClearSelection();
+            
         }
         public void delete()
         {
@@ -100,18 +101,19 @@ namespace PhanMemQuanLy.GUI.userControl
                     }
                 }
             }
-            dgvCustomer.ClearSelection();
+            
         }
 
         private void ucCustomer_Load(object sender, System.EventArgs e)
         {
+            dgvCustomer.Rows.Clear();
             dao_c.getAll().ForEach(customer =>
             {
                 customers.Add(customer);
                 cbId.Items.Add(customer.id);
                 addToDGV(customer);
             });
-            dgvCustomer.ClearSelection();
+            
         }
 
         public void addToDGV(Customer customer)
@@ -227,6 +229,52 @@ namespace PhanMemQuanLy.GUI.userControl
                 error += "Số điện thoại chỉ có 10 số\n";
             }
             return error;
+        }
+
+        private void txtKeyword_TextChanged(object sender, EventArgs e)
+        {
+            search();
+        }
+        public void search()
+        {
+            dgvCustomer.Rows.Clear();
+            if (cbFilter.SelectedIndex == 0)
+            {
+                dao_c.searchById(txtKeyword.Text).ForEach(customer =>
+                {
+                    addToDGV(customer);
+                });
+            }
+            else if (cbFilter.SelectedIndex == 1)
+            {
+                dao_c.searchByName(txtKeyword.Text).ForEach(customer =>
+                {
+                    addToDGV(customer);
+                });
+            }
+            else if (cbFilter.SelectedIndex == 2)
+            {
+                dao_c.searchByAddress(txtKeyword.Text).ForEach(customer =>
+                {
+                    addToDGV(customer);
+                });
+            }
+            else if (cbFilter.SelectedIndex == 3)
+            {
+                dao_c.searchByPhone(txtKeyword.Text).ForEach(customer =>
+                {
+                    addToDGV(customer);
+                });
+            }
+        }
+        private void cbFilter_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void cbFilter_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            search();
         }
     }
 }

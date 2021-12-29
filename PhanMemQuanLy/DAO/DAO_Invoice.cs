@@ -20,50 +20,69 @@ namespace PhanMemQuanLy.DAO
 
         public List<Invoice> getAll()
         {
-            DAO_Customer dao_c = new DAO_Customer();
-            DAO_Employee dao_e = new DAO_Employee();
-            DAO_OrderDetail dao_od = new DAO_OrderDetail();
             List<Invoice> result = new List<Invoice>();
-            cnn.Open();
-            string query = $"select sohd, ngayhd, manv, makh from hoadon";
-            scm = new SqlCommand(query, cnn);
-            reader = scm.ExecuteReader();
-            while (reader.Read())
+            try
             {
-                Invoice invoice = new Invoice();
-                invoice.id = reader.GetString(0);
-                invoice.date = reader.GetDateTime(1);
-                invoice.employee = dao_e.getById(reader.GetString(2));
-                invoice.customer = dao_c.getById(reader.GetString(3));
-                invoice.list = dao_od.getAll(invoice.id);
-                result.Add(invoice);
+                DAO_Customer dao_c = new DAO_Customer();
+                DAO_Employee dao_e = new DAO_Employee();
+                DAO_OrderDetail dao_od = new DAO_OrderDetail();
+                cnn.Open();
+                string query = $"execute sp_LayTatCaHoaDon";
+                scm = new SqlCommand(query, cnn);
+                reader = scm.ExecuteReader();
+                while (reader.Read())
+                {
+                    Invoice invoice = new Invoice();
+                    invoice.id = reader.GetString(0);
+                    invoice.date = reader.GetDateTime(1);
+                    invoice.employee = dao_e.getById(reader.GetString(2));
+                    invoice.customer = dao_c.getById(reader.GetString(3));
+                    invoice.list = dao_od.getAll(invoice.id);
+                    result.Add(invoice);
+                }
             }
-            cnn.Close();
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            finally
+            {
+                cnn.Close();
+            }
             return result;
         }
 
         public Invoice getById(string id)
         {
-            DAO_Customer dao_c = new DAO_Customer();
-            DAO_Employee dao_e = new DAO_Employee();
-            DAO_OrderDetail dao_od = new DAO_OrderDetail();
-            cnn.Open();
-            string query = $"select sohd, ngayhd, manv, makh from hoadon where sohd = '{id}'";
-            scm = new SqlCommand(query, cnn);
-            reader = scm.ExecuteReader();
-            if (reader.Read())
+            Invoice invoice = null;
+            try
             {
-                Invoice invoice = new Invoice();
-                invoice.id = reader.GetString(0);
-                invoice.date = reader.GetDateTime(1);
-                invoice.employee = dao_e.getById(reader.GetString(2));
-                invoice.customer = dao_c.getById(reader.GetString(3));
-                invoice.list = dao_od.getAll(invoice.id);
-                cnn.Close();
-                return invoice;
+                DAO_Customer dao_c = new DAO_Customer();
+                DAO_Employee dao_e = new DAO_Employee();
+                DAO_OrderDetail dao_od = new DAO_OrderDetail();
+                cnn.Open();
+                string query = $"execute sp_LayTatCaHoaDonTheoSoHD '{id}'";
+                scm = new SqlCommand(query, cnn);
+                reader = scm.ExecuteReader();
+                if (reader.Read())
+                {
+                    invoice = new Invoice();
+                    invoice.id = reader.GetString(0);
+                    invoice.date = reader.GetDateTime(1);
+                    invoice.employee = dao_e.getById(reader.GetString(2));
+                    invoice.customer = dao_c.getById(reader.GetString(3));
+                    invoice.list = dao_od.getAll(invoice.id);
+                }
             }
-            cnn.Close();
-            return null;
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            finally
+            {
+                cnn.Close();
+            }
+            return invoice;
         }
 
         public void insertOne(Invoice invoice)
@@ -74,17 +93,20 @@ namespace PhanMemQuanLy.DAO
                 string query = $"execute sp_ThemHoaDon '{invoice.id}','{invoice.date}','{invoice.employee.id}','{invoice.customer.id}'";
                 scm = new SqlCommand(query, cnn);
                 scm.ExecuteNonQuery();
-                cnn.Close();
-                DAO_OrderDetail dao_od = new DAO_OrderDetail();
-                invoice.list.ForEach(od =>
-                {
-                    dao_od.insertOne(invoice.id, od);
-                });
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex);
             }
+            finally
+            {
+                cnn.Close();
+            }
+            DAO_OrderDetail dao_od = new DAO_OrderDetail();
+            invoice.list.ForEach(od =>
+            {
+                dao_od.insertOne(invoice.id, od);
+            });
         }
 
         public void updateOne(Invoice invoice)
@@ -95,27 +117,40 @@ namespace PhanMemQuanLy.DAO
                 string query = $"execute sp_CapNhatHoaDon '{invoice.id}','{invoice.date}','{invoice.employee.id}','{invoice.customer.id}'";
                 scm = new SqlCommand(query, cnn);
                 scm.ExecuteNonQuery();
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
                 cnn.Close();
-                DAO_OrderDetail dao_od = new DAO_OrderDetail();
-                dao_od.deleteMany(invoice.id);
-                invoice.list.ForEach(od =>
-                {
-                    dao_od.insertOne(invoice.id, od);
-                });
+            }
+            DAO_OrderDetail dao_od = new DAO_OrderDetail();
+            dao_od.deleteMany(invoice.id);
+            invoice.list.ForEach(od =>
+            {
+                dao_od.insertOne(invoice.id, od);
+            });
+        }
+
+        public void deleteOne(string id)
+        {
+            try
+            {
+                cnn.Open();
+                string query = $"execute sp_XoaHoaDon '{id}'";
+                scm = new SqlCommand(query, cnn);
+                scm.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
             }
-        }
-
-        public void deleteOne(string id)
-        {
-            cnn.Open();
-            string query = $"execute sp_XoaHoaDon '{id}'";
-            scm = new SqlCommand(query, cnn);
-            scm.ExecuteNonQuery();
-            cnn.Close();
+            finally
+            {
+                cnn.Close();
+            }
         }
 
         internal string generateID(int length)

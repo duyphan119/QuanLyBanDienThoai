@@ -29,8 +29,7 @@ namespace PhanMemQuanLy.GUI.userControl
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.pnlInfo = new System.Windows.Forms.Panel();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.cbPermission = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.txtPassword = new System.Windows.Forms.TextBox();
@@ -44,25 +43,15 @@ namespace PhanMemQuanLy.GUI.userControl
             this.cName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cPassword = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cPermission = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pnlInfo.SuspendLayout();
+            this.txtKeyword = new System.Windows.Forms.TextBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.cbFilter = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmployee)).BeginInit();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // pnlInfo
-            // 
-            this.pnlInfo.Controls.Add(this.cbPermission);
-            this.pnlInfo.Controls.Add(this.label3);
-            this.pnlInfo.Controls.Add(this.txtPassword);
-            this.pnlInfo.Controls.Add(this.label2);
-            this.pnlInfo.Controls.Add(this.txtName);
-            this.pnlInfo.Controls.Add(this.label1);
-            this.pnlInfo.Controls.Add(this.cbId);
-            this.pnlInfo.Controls.Add(this.lblId);
-            this.pnlInfo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlInfo.Location = new System.Drawing.Point(0, 0);
-            this.pnlInfo.Name = "pnlInfo";
-            this.pnlInfo.Size = new System.Drawing.Size(1236, 70);
-            this.pnlInfo.TabIndex = 5;
             // 
             // cbPermission
             // 
@@ -72,15 +61,15 @@ namespace PhanMemQuanLy.GUI.userControl
             this.cbPermission.Items.AddRange(new object[] {
             "USER",
             "ADMIN"});
-            this.cbPermission.Location = new System.Drawing.Point(768, 21);
+            this.cbPermission.Location = new System.Drawing.Point(413, 59);
             this.cbPermission.Name = "cbPermission";
-            this.cbPermission.Size = new System.Drawing.Size(115, 27);
+            this.cbPermission.Size = new System.Drawing.Size(192, 27);
             this.cbPermission.TabIndex = 27;
             this.cbPermission.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cbPermission_KeyPress);
             // 
             // label3
             // 
-            this.label3.Location = new System.Drawing.Point(688, 20);
+            this.label3.Location = new System.Drawing.Point(314, 57);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(74, 30);
             this.label3.TabIndex = 26;
@@ -90,16 +79,16 @@ namespace PhanMemQuanLy.GUI.userControl
             // txtPassword
             // 
             this.txtPassword.Enabled = false;
-            this.txtPassword.Location = new System.Drawing.Point(544, 21);
+            this.txtPassword.Location = new System.Drawing.Point(413, 26);
             this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new System.Drawing.Size(138, 27);
+            this.txtPassword.Size = new System.Drawing.Size(192, 27);
             this.txtPassword.TabIndex = 25;
             // 
             // label2
             // 
-            this.label2.Location = new System.Drawing.Point(441, 22);
+            this.label2.Location = new System.Drawing.Point(313, 25);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(97, 28);
+            this.label2.Size = new System.Drawing.Size(84, 28);
             this.label2.TabIndex = 24;
             this.label2.Text = "Mật Khẩu";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -107,14 +96,14 @@ namespace PhanMemQuanLy.GUI.userControl
             // txtName
             // 
             this.txtName.Enabled = false;
-            this.txtName.Location = new System.Drawing.Point(271, 21);
+            this.txtName.Location = new System.Drawing.Point(115, 59);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(164, 27);
+            this.txtName.Size = new System.Drawing.Size(192, 27);
             this.txtName.TabIndex = 23;
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(189, 21);
+            this.label1.Location = new System.Drawing.Point(14, 59);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(76, 28);
             this.label1.TabIndex = 22;
@@ -125,15 +114,15 @@ namespace PhanMemQuanLy.GUI.userControl
             // 
             this.cbId.Enabled = false;
             this.cbId.FormattingEnabled = true;
-            this.cbId.Location = new System.Drawing.Point(85, 21);
+            this.cbId.Location = new System.Drawing.Point(115, 26);
             this.cbId.Name = "cbId";
-            this.cbId.Size = new System.Drawing.Size(98, 27);
+            this.cbId.Size = new System.Drawing.Size(192, 27);
             this.cbId.TabIndex = 21;
             this.cbId.SelectedIndexChanged += new System.EventHandler(this.cbId_SelectedIndexChanged);
             // 
             // lblId
             // 
-            this.lblId.Location = new System.Drawing.Point(4, 21);
+            this.lblId.Location = new System.Drawing.Point(15, 26);
             this.lblId.Name = "lblId";
             this.lblId.Size = new System.Drawing.Size(75, 30);
             this.lblId.TabIndex = 20;
@@ -146,30 +135,33 @@ namespace PhanMemQuanLy.GUI.userControl
             this.dgvEmployee.AllowUserToDeleteRows = false;
             this.dgvEmployee.AllowUserToResizeColumns = false;
             this.dgvEmployee.AllowUserToResizeRows = false;
+            this.dgvEmployee.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvEmployee.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.ControlLight;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Arial", 10.2F);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.ControlLight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvEmployee.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvEmployee.BackgroundColor = System.Drawing.Color.White;
+            this.dgvEmployee.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.ControlLight;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Arial", 10.2F);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.ControlLight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvEmployee.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvEmployee.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvEmployee.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.cId,
             this.cName,
             this.cPassword,
             this.cPermission});
-            this.dgvEmployee.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvEmployee.EnableHeadersVisualStyles = false;
-            this.dgvEmployee.Location = new System.Drawing.Point(0, 70);
+            this.dgvEmployee.Location = new System.Drawing.Point(18, 26);
             this.dgvEmployee.Name = "dgvEmployee";
             this.dgvEmployee.RowHeadersVisible = false;
             this.dgvEmployee.RowHeadersWidth = 51;
             this.dgvEmployee.RowTemplate.Height = 24;
             this.dgvEmployee.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvEmployee.Size = new System.Drawing.Size(1236, 619);
+            this.dgvEmployee.Size = new System.Drawing.Size(788, 416);
             this.dgvEmployee.TabIndex = 6;
             // 
             // cId
@@ -200,25 +192,93 @@ namespace PhanMemQuanLy.GUI.userControl
             this.cPermission.Name = "cPermission";
             this.cPermission.ReadOnly = true;
             // 
+            // txtKeyword
+            // 
+            this.txtKeyword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtKeyword.Location = new System.Drawing.Point(627, 127);
+            this.txtKeyword.Name = "txtKeyword";
+            this.txtKeyword.Size = new System.Drawing.Size(195, 27);
+            this.txtKeyword.TabIndex = 29;
+            this.txtKeyword.TextChanged += new System.EventHandler(this.txtKeyword_TextChanged);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.cbId);
+            this.groupBox1.Controls.Add(this.lblId);
+            this.groupBox1.Controls.Add(this.cbPermission);
+            this.groupBox1.Controls.Add(this.txtName);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.txtPassword);
+            this.groupBox1.Location = new System.Drawing.Point(16, 20);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(824, 101);
+            this.groupBox1.TabIndex = 30;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Thông tin nhân viên";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.dgvEmployee);
+            this.groupBox2.Location = new System.Drawing.Point(16, 160);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(824, 463);
+            this.groupBox2.TabIndex = 31;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Danh sách nhân viên";
+            // 
+            // cbFilter
+            // 
+            this.cbFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbFilter.FormattingEnabled = true;
+            this.cbFilter.Items.AddRange(new object[] {
+            "Mã",
+            "Tên"});
+            this.cbFilter.Location = new System.Drawing.Point(550, 127);
+            this.cbFilter.Name = "cbFilter";
+            this.cbFilter.Size = new System.Drawing.Size(71, 27);
+            this.cbFilter.TabIndex = 28;
+            this.cbFilter.SelectedIndexChanged += new System.EventHandler(this.cbFilter_SelectedIndexChanged);
+            this.cbFilter.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cbFilter_KeyPress);
+            // 
+            // label4
+            // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label4.Location = new System.Drawing.Point(468, 126);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(76, 28);
+            this.label4.TabIndex = 28;
+            this.label4.Text = "Tìm kiếm";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // ucEmployee
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.Controls.Add(this.dgvEmployee);
-            this.Controls.Add(this.pnlInfo);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.cbFilter);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.txtKeyword);
             this.Font = new System.Drawing.Font("Arial", 10.2F);
             this.Name = "ucEmployee";
-            this.Size = new System.Drawing.Size(1236, 689);
+            this.Size = new System.Drawing.Size(857, 644);
             this.Load += new System.EventHandler(this.ucEmployee_Load);
-            this.pnlInfo.ResumeLayout(false);
-            this.pnlInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEmployee)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel pnlInfo;
         private System.Windows.Forms.ComboBox cbPermission;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtPassword;
@@ -232,5 +292,10 @@ namespace PhanMemQuanLy.GUI.userControl
         private System.Windows.Forms.DataGridViewTextBoxColumn cName;
         private System.Windows.Forms.DataGridViewTextBoxColumn cPassword;
         private System.Windows.Forms.DataGridViewTextBoxColumn cPermission;
+        private System.Windows.Forms.TextBox txtKeyword;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.ComboBox cbFilter;
+        private System.Windows.Forms.Label label4;
     }
 }

@@ -20,17 +20,18 @@ namespace PhanMemQuanLy.GUI.userControl
             InitializeComponent();
             Dock = DockStyle.Fill;
             _employee = e;
+            cbFilter.SelectedIndex = 0;
         }
 
         private void ucEmployee_Load(object sender, EventArgs e)
         {
+            dgvEmployee.Rows.Clear();
             dao_e.getAll().ForEach(employee =>
             {
                 employees.Add(employee);
                 cbId.Items.Add(employee.id);
                 addToDGV(employee);
             });
-            dgvEmployee.ClearSelection();
         }
 
         public void addToDGV(Employee employee)
@@ -114,7 +115,7 @@ namespace PhanMemQuanLy.GUI.userControl
                     }
                 }
             }
-            dgvEmployee.ClearSelection();
+            
         }
 
         
@@ -202,7 +203,7 @@ namespace PhanMemQuanLy.GUI.userControl
                     EditEmployee(employee);
                 }
                 reset();
-                dgvEmployee.ClearSelection();
+                
             }
         }
         public void reset()
@@ -217,7 +218,7 @@ namespace PhanMemQuanLy.GUI.userControl
             setEnabled(false);
             cbId.Text = "";
             cbId.Enabled = false;
-            dgvEmployee.ClearSelection();
+            
         }
         private void cbPermission_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -233,9 +234,42 @@ namespace PhanMemQuanLy.GUI.userControl
                 {
                     txtName.Text = employee.name;
                     txtPassword.Text = employee.password;
-                    cbPermission.SelectedIndex = employee.permission;
+                    cbPermission.Text = employee.permission == 0 ? "USER" : "ADMIN";
                 }
             }
+        }
+
+        private void txtKeyword_TextChanged(object sender, EventArgs e)
+        {
+            search();
+        }
+
+        public void search()
+        {
+            dgvEmployee.Rows.Clear();
+            if (cbFilter.SelectedIndex == 0)
+            {
+                dao_e.searchById(txtKeyword.Text).ForEach(employee =>
+                {
+                    addToDGV(employee);
+                });
+            }
+            else if (cbFilter.SelectedIndex == 1)
+            {
+                dao_e.searchByName(txtKeyword.Text).ForEach(employee =>
+                {
+                    addToDGV(employee);
+                });
+            }
+        }
+        private void cbFilter_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void cbFilter_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            search();
         }
     }
 }

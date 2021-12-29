@@ -15,18 +15,19 @@ namespace PhanMemQuanLy.GUI
         private List<Product> products = new List<Product>();
         private List<Manufacturer> groups = new List<Manufacturer>();
         private List<ucCardProduct> cards = new List<ucCardProduct>();
-        private DAO_Invoice dao_i = new DAO_Invoice();
-        private DAO_OrderDetail dao_od = new DAO_OrderDetail();
         private List<ucProductSelected> listProductSelected = new List<ucProductSelected>();
         private List<string> productNames = new List<string>();
         private List<OrderDetail> orderDetails = new List<OrderDetail>();
         private string id = "";
-        public F_SelectProduct(ucInvoice f, string invoiceID, List<OrderDetail> od)
+        private string action = "";
+        private bool submit = false;
+        public F_SelectProduct(ucInvoice f, string ac, string invoiceID, List<OrderDetail> od)
         {
             InitializeComponent();
             preComponent = f;
             orderDetails = od;
             id = invoiceID;
+            action = ac;
         }
 
         private void F_SelectProduct_Load(object sender, EventArgs e)
@@ -36,14 +37,18 @@ namespace PhanMemQuanLy.GUI
                 cbGroup.Items.Add(group.name);
                 groups.Add(group);
             });
-            cbGroup.SelectedIndex = 2;
+            cbGroup.SelectedIndex = 0;
             fpnlCardProductSelected.Controls.Clear();
             orderDetails.ForEach(orderDetail =>
             {
-                listProductSelected.Add(new ucProductSelected(this, id ,orderDetail) { 
-                    Name = $"CardProductSelected{fpnlCardProductSelected.Controls.Count}"
-                });
-                fpnlCardProductSelected.Controls.Add(listProductSelected[listProductSelected.Count - 1]);
+                if(orderDetail.quantity > 0)
+                {
+                    listProductSelected.Add(new ucProductSelected(this, id, orderDetail)
+                    {
+                        Name = $"CardProductSelected{fpnlCardProductSelected.Controls.Count}"
+                    });
+                    fpnlCardProductSelected.Controls.Add(listProductSelected[listProductSelected.Count - 1]);
+                }
             });
         }
 
@@ -87,10 +92,12 @@ namespace PhanMemQuanLy.GUI
                 totalPrice += od.getTotal();
             });
             txtTotalAll.Text = $"{(totalPrice == 0 ? "0" : totalPrice.ToString("#,##"))}đ";
+            cards.Find(card => card.getName() == orderDetail.product.name).updateQuantity(orderDetail, -orderDetail.quantity);
         }
 
         private void btnSubmit_Click(object sender, EventArgs e)
         {
+            submit = true;
             preComponent.getListOrderDetail(orderDetails);
             preComponent.finishSelectProduct();
             Close();
@@ -136,7 +143,7 @@ namespace PhanMemQuanLy.GUI
                     {
                         if (!productNames.Contains(product.name))
                         {
-                            cards.Add(new ucCardProduct(this,orderDetails, product.name));
+                            cards.Add(new ucCardProduct(this, action, orderDetails, product.name));
                             fpnlCardProduct.Controls.Add(cards[cards.Count - 1]);
                             productNames.Add(product.name);
                         }
@@ -153,15 +160,18 @@ namespace PhanMemQuanLy.GUI
 
         private void F_SelectProduct_FormClosing(object sender, FormClosingEventArgs e)
         {
-            DialogResult answer = MessageBox.Show("Bạn có chắc chắn thoát?", "Câu hỏi", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if(answer == DialogResult.Yes)
+            if(submit == false)
             {
-                preComponent.finishSelectProduct();
-                e.Cancel = false;
-            }
-            else
-            {
-                e.Cancel = true;
+                DialogResult answer = MessageBox.Show("Bạn có chắc chắn thoát?", "Câu hỏi", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (answer == DialogResult.Yes)
+                {
+                    preComponent.finishSelectProduct();
+                    e.Cancel = false;
+                }
+                else
+                {
+                    e.Cancel = true;
+                }
             }
         }
     }

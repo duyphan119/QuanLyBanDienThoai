@@ -15,10 +15,16 @@ namespace PhanMemQuanLy.GUI
         
         private void btnLogin_Click(object sender, EventArgs e)
         {
+            login();
+        }
+
+        public void login()
+        {
             string id = txtId.Text;
             string password = txtPassword.Text;
             string error1 = "Mã nhân viên không chính xác";
             string error2 = "Mật khẩu không chính xác";
+
             Employee employee = dao_e.getById(id);
             if (employee != null)
             {
@@ -26,6 +32,7 @@ namespace PhanMemQuanLy.GUI
                 {
                     txtId.Text = txtPassword.Text = "";
                     new F_Main(this, employee).Visible = true;
+                    Visible = false;
                 }
                 else
                 {
@@ -35,6 +42,22 @@ namespace PhanMemQuanLy.GUI
             else
             {
                 MessageBox.Show(error1, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void txtPassword_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if(e.KeyChar == (char)13)
+            {
+                login();
+            }
+        }
+
+        private void txtId_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)13)
+            {
+                login();
             }
         }
     }

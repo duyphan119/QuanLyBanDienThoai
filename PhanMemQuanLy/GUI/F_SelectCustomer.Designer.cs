@@ -30,12 +30,16 @@ namespace PhanMemQuanLy.GUI
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(F_SelectCustomer));
             this.dgvCustomer = new System.Windows.Forms.DataGridView();
             this.cId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cPassword = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cPermission = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pnlInfo = new System.Windows.Forms.Panel();
+            this.txtId = new System.Windows.Forms.TextBox();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
             this.btnSelect = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
             this.txtPhone = new System.Windows.Forms.TextBox();
@@ -45,9 +49,8 @@ namespace PhanMemQuanLy.GUI
             this.txtName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.lblId = new System.Windows.Forms.Label();
-            this.btnSave = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.txtId = new System.Windows.Forms.TextBox();
+            this.txtKeyword = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCustomer)).BeginInit();
             this.pnlInfo.SuspendLayout();
             this.SuspendLayout();
@@ -59,13 +62,16 @@ namespace PhanMemQuanLy.GUI
             this.dgvCustomer.AllowUserToResizeColumns = false;
             this.dgvCustomer.AllowUserToResizeRows = false;
             this.dgvCustomer.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvCustomer.BackgroundColor = System.Drawing.Color.White;
+            this.dgvCustomer.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvCustomer.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.ControlLight;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.ControlLight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvCustomer.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvCustomer.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCustomer.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -74,7 +80,6 @@ namespace PhanMemQuanLy.GUI
             this.cPassword,
             this.cPermission});
             this.dgvCustomer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvCustomer.EnableHeadersVisualStyles = false;
             this.dgvCustomer.Location = new System.Drawing.Point(0, 0);
             this.dgvCustomer.MultiSelect = false;
             this.dgvCustomer.Name = "dgvCustomer";
@@ -84,6 +89,7 @@ namespace PhanMemQuanLy.GUI
             this.dgvCustomer.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvCustomer.Size = new System.Drawing.Size(1116, 744);
             this.dgvCustomer.TabIndex = 10;
+            this.dgvCustomer.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCustomer_CellClick);
             // 
             // cId
             // 
@@ -119,6 +125,9 @@ namespace PhanMemQuanLy.GUI
             // 
             // pnlInfo
             // 
+            this.pnlInfo.BackColor = System.Drawing.Color.White;
+            this.pnlInfo.Controls.Add(this.label4);
+            this.pnlInfo.Controls.Add(this.txtKeyword);
             this.pnlInfo.Controls.Add(this.txtId);
             this.pnlInfo.Controls.Add(this.btnCancel);
             this.pnlInfo.Controls.Add(this.btnSave);
@@ -137,6 +146,34 @@ namespace PhanMemQuanLy.GUI
             this.pnlInfo.Size = new System.Drawing.Size(292, 744);
             this.pnlInfo.TabIndex = 9;
             // 
+            // txtId
+            // 
+            this.txtId.Enabled = false;
+            this.txtId.Location = new System.Drawing.Point(101, 105);
+            this.txtId.Name = "txtId";
+            this.txtId.Size = new System.Drawing.Size(179, 27);
+            this.txtId.TabIndex = 40;
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Location = new System.Drawing.Point(105, 274);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(86, 28);
+            this.btnCancel.TabIndex = 39;
+            this.btnCancel.Text = "Huỷ";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // btnSave
+            // 
+            this.btnSave.Location = new System.Drawing.Point(197, 274);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(84, 28);
+            this.btnSave.TabIndex = 38;
+            this.btnSave.Text = "Lưu";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
             // btnSelect
             // 
             this.btnSelect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -150,7 +187,7 @@ namespace PhanMemQuanLy.GUI
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(13, 190);
+            this.btnAdd.Location = new System.Drawing.Point(13, 274);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(86, 28);
             this.btnAdd.TabIndex = 37;
@@ -161,14 +198,14 @@ namespace PhanMemQuanLy.GUI
             // txtPhone
             // 
             this.txtPhone.Enabled = false;
-            this.txtPhone.Location = new System.Drawing.Point(101, 157);
+            this.txtPhone.Location = new System.Drawing.Point(101, 241);
             this.txtPhone.Name = "txtPhone";
             this.txtPhone.Size = new System.Drawing.Size(179, 27);
             this.txtPhone.TabIndex = 36;
             // 
             // label3
             // 
-            this.label3.Location = new System.Drawing.Point(16, 154);
+            this.label3.Location = new System.Drawing.Point(16, 238);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(54, 30);
             this.label3.TabIndex = 35;
@@ -178,7 +215,7 @@ namespace PhanMemQuanLy.GUI
             // txtAddress
             // 
             this.txtAddress.Enabled = false;
-            this.txtAddress.Location = new System.Drawing.Point(101, 87);
+            this.txtAddress.Location = new System.Drawing.Point(101, 171);
             this.txtAddress.Multiline = true;
             this.txtAddress.Name = "txtAddress";
             this.txtAddress.Size = new System.Drawing.Size(179, 64);
@@ -186,7 +223,7 @@ namespace PhanMemQuanLy.GUI
             // 
             // label2
             // 
-            this.label2.Location = new System.Drawing.Point(16, 85);
+            this.label2.Location = new System.Drawing.Point(16, 169);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(73, 28);
             this.label2.TabIndex = 33;
@@ -196,14 +233,14 @@ namespace PhanMemQuanLy.GUI
             // txtName
             // 
             this.txtName.Enabled = false;
-            this.txtName.Location = new System.Drawing.Point(101, 54);
+            this.txtName.Location = new System.Drawing.Point(101, 138);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(179, 27);
             this.txtName.TabIndex = 32;
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(16, 53);
+            this.label1.Location = new System.Drawing.Point(16, 137);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(63, 28);
             this.label1.TabIndex = 31;
@@ -212,40 +249,30 @@ namespace PhanMemQuanLy.GUI
             // 
             // lblId
             // 
-            this.lblId.Location = new System.Drawing.Point(16, 18);
+            this.lblId.Location = new System.Drawing.Point(16, 102);
             this.lblId.Name = "lblId";
             this.lblId.Size = new System.Drawing.Size(63, 30);
             this.lblId.TabIndex = 29;
             this.lblId.Text = "Mã KH";
             this.lblId.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // btnSave
+            // txtKeyword
             // 
-            this.btnSave.Location = new System.Drawing.Point(197, 190);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(84, 28);
-            this.btnSave.TabIndex = 38;
-            this.btnSave.Text = "Lưu";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            this.txtKeyword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtKeyword.Location = new System.Drawing.Point(101, 32);
+            this.txtKeyword.Name = "txtKeyword";
+            this.txtKeyword.Size = new System.Drawing.Size(179, 27);
+            this.txtKeyword.TabIndex = 41;
+            this.txtKeyword.TextChanged += new System.EventHandler(this.txtKeyword_TextChanged);
             // 
-            // btnCancel
+            // label4
             // 
-            this.btnCancel.Location = new System.Drawing.Point(105, 190);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(86, 28);
-            this.btnCancel.TabIndex = 39;
-            this.btnCancel.Text = "Huỷ";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // txtId
-            // 
-            this.txtId.Enabled = false;
-            this.txtId.Location = new System.Drawing.Point(101, 21);
-            this.txtId.Name = "txtId";
-            this.txtId.Size = new System.Drawing.Size(179, 27);
-            this.txtId.TabIndex = 40;
+            this.label4.Location = new System.Drawing.Point(16, 29);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(79, 30);
+            this.label4.TabIndex = 42;
+            this.label4.Text = "Tìm Kiếm";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // F_SelectCustomer
             // 
@@ -254,6 +281,7 @@ namespace PhanMemQuanLy.GUI
             this.Controls.Add(this.dgvCustomer);
             this.Controls.Add(this.pnlInfo);
             this.Font = new System.Drawing.Font("Arial", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "F_SelectCustomer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Chọn Khách Hàng";
@@ -285,5 +313,7 @@ namespace PhanMemQuanLy.GUI
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblId;
         private System.Windows.Forms.TextBox txtId;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox txtKeyword;
     }
 }

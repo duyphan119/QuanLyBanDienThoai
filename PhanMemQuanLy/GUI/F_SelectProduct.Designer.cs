@@ -29,22 +29,23 @@ namespace PhanMemQuanLy.GUI
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(F_SelectProduct));
             this.fpnlCardProduct = new System.Windows.Forms.FlowLayoutPanel();
+            this.uC_CardProduct8 = new PhanMemQuanLy.GUI.userControl.ucCardProduct();
+            this.uC_CardProduct9 = new PhanMemQuanLy.GUI.userControl.ucCardProduct();
+            this.uC_CardProduct1 = new PhanMemQuanLy.GUI.userControl.ucCardProduct();
             this.label1 = new System.Windows.Forms.Label();
             this.cbGroup = new System.Windows.Forms.ComboBox();
             this.btnSubmit = new System.Windows.Forms.Button();
             this.fpnlCardProductSelected = new System.Windows.Forms.FlowLayoutPanel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtTotalAll = new System.Windows.Forms.TextBox();
             this.ucProductSelected1 = new PhanMemQuanLy.GUI.userControl.ucProductSelected();
             this.ucProductSelected2 = new PhanMemQuanLy.GUI.userControl.ucProductSelected();
             this.ucProductSelected3 = new PhanMemQuanLy.GUI.userControl.ucProductSelected();
             this.ucProductSelected4 = new PhanMemQuanLy.GUI.userControl.ucProductSelected();
-            this.uC_CardProduct8 = new PhanMemQuanLy.GUI.userControl.ucCardProduct();
-            this.uC_CardProduct9 = new PhanMemQuanLy.GUI.userControl.ucCardProduct();
-            this.uC_CardProduct1 = new PhanMemQuanLy.GUI.userControl.ucCardProduct();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtTotalAll = new System.Windows.Forms.TextBox();
             this.fpnlCardProduct.SuspendLayout();
             this.fpnlCardProductSelected.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -64,20 +65,50 @@ namespace PhanMemQuanLy.GUI
             this.fpnlCardProduct.Size = new System.Drawing.Size(1197, 323);
             this.fpnlCardProduct.TabIndex = 0;
             // 
+            // uC_CardProduct8
+            // 
+            this.uC_CardProduct8.BackColor = System.Drawing.Color.White;
+            this.uC_CardProduct8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.uC_CardProduct8.Location = new System.Drawing.Point(6, 6);
+            this.uC_CardProduct8.Margin = new System.Windows.Forms.Padding(6);
+            this.uC_CardProduct8.Name = "uC_CardProduct8";
+            this.uC_CardProduct8.Size = new System.Drawing.Size(238, 309);
+            this.uC_CardProduct8.TabIndex = 7;
+            // 
+            // uC_CardProduct9
+            // 
+            this.uC_CardProduct9.BackColor = System.Drawing.Color.White;
+            this.uC_CardProduct9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.uC_CardProduct9.Location = new System.Drawing.Point(256, 6);
+            this.uC_CardProduct9.Margin = new System.Windows.Forms.Padding(6);
+            this.uC_CardProduct9.Name = "uC_CardProduct9";
+            this.uC_CardProduct9.Size = new System.Drawing.Size(238, 309);
+            this.uC_CardProduct9.TabIndex = 8;
+            // 
+            // uC_CardProduct1
+            // 
+            this.uC_CardProduct1.BackColor = System.Drawing.Color.White;
+            this.uC_CardProduct1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.uC_CardProduct1.Location = new System.Drawing.Point(506, 6);
+            this.uC_CardProduct1.Margin = new System.Windows.Forms.Padding(6);
+            this.uC_CardProduct1.Name = "uC_CardProduct1";
+            this.uC_CardProduct1.Size = new System.Drawing.Size(238, 309);
+            this.uC_CardProduct1.TabIndex = 9;
+            // 
             // label1
             // 
             this.label1.Location = new System.Drawing.Point(12, 17);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(90, 25);
+            this.label1.Size = new System.Drawing.Size(111, 25);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Nhãn Hiệu";
+            this.label1.Text = "Nhà sản xuất";
             // 
             // cbGroup
             // 
             this.cbGroup.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbGroup.FormattingEnabled = true;
             this.cbGroup.IntegralHeight = false;
-            this.cbGroup.Location = new System.Drawing.Point(108, 14);
+            this.cbGroup.Location = new System.Drawing.Point(129, 14);
             this.cbGroup.Name = "cbGroup";
             this.cbGroup.Size = new System.Drawing.Size(182, 28);
             this.cbGroup.TabIndex = 2;
@@ -110,50 +141,6 @@ namespace PhanMemQuanLy.GUI
             this.fpnlCardProductSelected.Name = "fpnlCardProductSelected";
             this.fpnlCardProductSelected.Size = new System.Drawing.Size(974, 313);
             this.fpnlCardProductSelected.TabIndex = 4;
-            // 
-            // panel1
-            // 
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.label2);
-            this.panel1.Location = new System.Drawing.Point(2, 381);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(974, 49);
-            this.panel1.TabIndex = 5;
-            // 
-            // label2
-            // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            this.label2.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(0, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(972, 47);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Danh Sách Sản Phẩm Đã Chọn";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label3
-            // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.Font = new System.Drawing.Font("Arial", 10.2F);
-            this.label3.Location = new System.Drawing.Point(978, 649);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(81, 25);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "Tổng Tiền";
-            // 
-            // txtTotalAll
-            // 
-            this.txtTotalAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtTotalAll.Font = new System.Drawing.Font("Arial", 10.2F);
-            this.txtTotalAll.Location = new System.Drawing.Point(1065, 646);
-            this.txtTotalAll.Name = "txtTotalAll";
-            this.txtTotalAll.ReadOnly = true;
-            this.txtTotalAll.Size = new System.Drawing.Size(123, 27);
-            this.txtTotalAll.TabIndex = 7;
-            this.txtTotalAll.Text = "0đ";
-            this.txtTotalAll.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // ucProductSelected1
             // 
@@ -203,35 +190,49 @@ namespace PhanMemQuanLy.GUI
             this.ucProductSelected4.Size = new System.Drawing.Size(940, 90);
             this.ucProductSelected4.TabIndex = 3;
             // 
-            // uC_CardProduct8
+            // panel1
             // 
-            this.uC_CardProduct8.BackColor = System.Drawing.Color.White;
-            this.uC_CardProduct8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.uC_CardProduct8.Location = new System.Drawing.Point(6, 6);
-            this.uC_CardProduct8.Margin = new System.Windows.Forms.Padding(6);
-            this.uC_CardProduct8.Name = "uC_CardProduct8";
-            this.uC_CardProduct8.Size = new System.Drawing.Size(238, 309);
-            this.uC_CardProduct8.TabIndex = 7;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.label2);
+            this.panel1.Location = new System.Drawing.Point(2, 381);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(974, 49);
+            this.panel1.TabIndex = 5;
             // 
-            // uC_CardProduct9
+            // label2
             // 
-            this.uC_CardProduct9.BackColor = System.Drawing.Color.White;
-            this.uC_CardProduct9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.uC_CardProduct9.Location = new System.Drawing.Point(256, 6);
-            this.uC_CardProduct9.Margin = new System.Windows.Forms.Padding(6);
-            this.uC_CardProduct9.Name = "uC_CardProduct9";
-            this.uC_CardProduct9.Size = new System.Drawing.Size(238, 309);
-            this.uC_CardProduct9.TabIndex = 8;
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.label2.Font = new System.Drawing.Font("Arial", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(0, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(972, 47);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Danh Sách Sản Phẩm Đã Chọn";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // uC_CardProduct1
+            // label3
             // 
-            this.uC_CardProduct1.BackColor = System.Drawing.Color.White;
-            this.uC_CardProduct1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.uC_CardProduct1.Location = new System.Drawing.Point(506, 6);
-            this.uC_CardProduct1.Margin = new System.Windows.Forms.Padding(6);
-            this.uC_CardProduct1.Name = "uC_CardProduct1";
-            this.uC_CardProduct1.Size = new System.Drawing.Size(238, 309);
-            this.uC_CardProduct1.TabIndex = 9;
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.Font = new System.Drawing.Font("Arial", 10.2F);
+            this.label3.Location = new System.Drawing.Point(978, 649);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(81, 25);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Tổng Tiền";
+            // 
+            // txtTotalAll
+            // 
+            this.txtTotalAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtTotalAll.Font = new System.Drawing.Font("Arial", 10.2F);
+            this.txtTotalAll.Location = new System.Drawing.Point(1065, 646);
+            this.txtTotalAll.Name = "txtTotalAll";
+            this.txtTotalAll.ReadOnly = true;
+            this.txtTotalAll.Size = new System.Drawing.Size(123, 27);
+            this.txtTotalAll.TabIndex = 7;
+            this.txtTotalAll.Text = "0đ";
+            this.txtTotalAll.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // F_SelectProduct
             // 
@@ -246,6 +247,7 @@ namespace PhanMemQuanLy.GUI
             this.Controls.Add(this.label1);
             this.Controls.Add(this.fpnlCardProduct);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "F_SelectProduct";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Chọn Sản Phẩm";

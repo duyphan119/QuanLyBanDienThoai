@@ -330,12 +330,6 @@
     <Compile Include="GUI\userControl\ucEmployee.Designer.cs">
       <DependentUpon>ucEmployee.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\userControl\ucHome.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GUI\userControl\ucHome.Designer.cs">
-      <DependentUpon>ucHome.cs</DependentUpon>
-    </Compile>
     <Compile Include="GUI\userControl\ucInvoice.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -412,9 +406,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\userControl\ucEmployee.resx">
       <DependentUpon>ucEmployee.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GUI\userControl\ucHome.resx">
-      <DependentUpon>ucHome.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\userControl\ucInvoice.resx">
       <DependentUpon>ucInvoice.cs</DependentUpon>
@@ -518,6 +509,12 @@
     <None Include="public\img\iphone-x.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="public\img\homePage.jpg" />
+    <None Include="public\img\money.png" />
+    <None Include="public\img\app-development.png" />
+    <None Include="public\img\printer.png" />
+    <None Include="public\img\mobile-phone.png" />
+    <None Include="public\img\rating.png" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -14,10 +14,22 @@ namespace PhanMemQuanLy.GUI
 {
     public partial class F_Report : Form
     {
+        public F_Report(string title, DataTable table)
+        {
+            InitializeComponent();
+            rpv.LocalReport.ReportPath = @"..\..\GUI\report\Revenue.rdlc";
+            ReportDataSource rds = new ReportDataSource();
+            rds.Name = "RevenueDataSet";
+            rds.Value = table;
+            ReportParameter rptTitle = new ReportParameter("title", title);
+            rpv.LocalReport.SetParameters(new ReportParameter[] { rptTitle });
+            rpv.LocalReport.DataSources.Clear();
+            rpv.LocalReport.DataSources.Add(rds);
+            rpv.RefreshReport();
+        }
         public F_Report(Invoice invoice, DataTable table)
         {
             InitializeComponent();
-
             rpv.LocalReport.ReportPath = @"..\..\GUI\report\Invoice.rdlc";
             ReportDataSource rds = new ReportDataSource();
             rds.Name = "InvoiceDataSet";

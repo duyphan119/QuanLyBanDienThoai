@@ -12,11 +12,7 @@ namespace PhanMemQuanLy.GUI
         private const string ADD = "Thêm";
         private const string EDIT = "Sửa";
         private const string DELETE = "Xoá";
-        private const string REFRESH = "Làm mới";
         private const string SAVE = "Lưu";
-        private const string CHANGEPASSWORD = "Đổi mật khẩu";
-        private const string LOGOUT = "Đăng xuất";
-        private ucHome controlHome = new ucHome();
         private Employee employee;
         private ucInvoice controlInvoice;
         private ucManufacturer controlManufacturer;
@@ -26,17 +22,39 @@ namespace PhanMemQuanLy.GUI
         private ucStatistics controlStatistics;
         private F_Login preComponent;
         private List<ucAction> actions = new List<ucAction>();
+        private bool isLogOut = false;
 
         public F_Main(F_Login f, Employee emp)
         {
             InitializeComponent();
             preComponent = f;
             employee = emp;
+            if(emp.permission == 0)
+            {
+                quyenUSER();
+                controlInvoice = new ucInvoice(employee);
+                pnlView.Controls.Add(controlInvoice);
+            }
+            else
+            {
+                controlEmployee = new ucEmployee(employee);
+                pnlView.Controls.Add(controlEmployee);
+                setActiveMenu(employeeToolStripMenuItem);
+            }
+
+        }
+
+        public void quyenUSER()
+        {
+            menuStrip.Items.Remove(employeeToolStripMenuItem);
+            menuStrip.Items.Remove(manufacturerToolStripMenuItem);
+            menuStrip.Items.Remove(productToolStripMenuItem);
+            setActiveMenu(invoiceToolStripMenuItem);
         }
 
         private void F_Main_Edited_Load(object sender, EventArgs e)
         {
-            pnlView.Controls.Add(controlHome);
+            
 
             ucAction actionNew = new ucAction(this);
             actionNew.Name = "ucAction" + actions.Count;
@@ -52,19 +70,15 @@ namespace PhanMemQuanLy.GUI
             actions.Add(actionEdit);
             fpnlActions.Controls.Add(actionEdit);
 
-            ucAction actionDelete = new ucAction(this);
-            actionDelete.Name = "ucAction" + actions.Count;
-            actionDelete.setText(DELETE);
-            actionDelete.setImage(@"..\..\public\img\rubbish-bin.png");
-            actions.Add(actionDelete);
-            fpnlActions.Controls.Add(actionDelete);
-
-            ucAction actionRefresh = new ucAction(this);
-            actionRefresh.Name = "ucAction" + actions.Count;
-            actionRefresh.setText(REFRESH);
-            actionRefresh.setImage(@"..\..\public\img\refresh-new.png");
-            actions.Add(actionRefresh);
-            fpnlActions.Controls.Add(actionRefresh);
+            if(employee.permission == 1)
+            {
+                ucAction actionDelete = new ucAction(this);
+                actionDelete.Name = "ucAction" + actions.Count;
+                actionDelete.setText(DELETE);
+                actionDelete.setImage(@"..\..\public\img\rubbish-bin.png");
+                actions.Add(actionDelete);
+                fpnlActions.Controls.Add(actionDelete);
+            }
 
             ucAction actionSave = new ucAction(this);
             actionSave.Name = "ucAction" + actions.Count;
@@ -73,24 +87,15 @@ namespace PhanMemQuanLy.GUI
             actions.Add(actionSave);
             fpnlActions.Controls.Add(actionSave);
 
-            ucAction actionChangePassword = new ucAction(this);
-            actionChangePassword.Name = "ucAction" + actions.Count;
-            actionChangePassword.setText(CHANGEPASSWORD);
-            actionChangePassword.setImage(@"..\..\public\img\reload.png");
-            actions.Add(actionChangePassword);
-            fpnlActions.Controls.Add(actionChangePassword);
-
-            ucAction actionLogout = new ucAction(this);
-            actionLogout.Name = "ucAction" + actions.Count;
-            actionLogout.setText(LOGOUT);
-            actionLogout.setImage(@"..\..\public\img\log-out.png");
-            actions.Add(actionLogout);
-            fpnlActions.Controls.Add(actionLogout);
+            fpnlActions.Visible = true;
         }
 
         private void F_Main_Edited_FormClosed(object sender, FormClosedEventArgs e)
         {
-            preComponent.Close();
+            if(isLogOut == false)
+            {
+                preComponent.Close();
+            }
         }
 
         public void actionClicked(ucAction ua, string actionName)
@@ -163,28 +168,6 @@ namespace PhanMemQuanLy.GUI
                         controlManufacturer.delete();
                     }
                     break;
-                case REFRESH:
-                    if (controlEmployee != null && pnlView.Controls[0].Name == controlEmployee.Name)
-                    {
-                        controlEmployee.refresh();
-                    }
-                    else if (controlCustomer != null && pnlView.Controls[0].Name == controlCustomer.Name)
-                    {
-                        controlCustomer.refresh();
-                    }
-                    else if (controlProduct != null && pnlView.Controls[0].Name == controlProduct.Name)
-                    {
-                        controlProduct.refresh();
-                    }
-                    else if (controlInvoice != null && pnlView.Controls[0].Name == controlInvoice.Name)
-                    {
-                        controlInvoice.refresh();
-                    }
-                    else if (controlManufacturer != null && pnlView.Controls[0].Name == controlManufacturer.Name)
-                    {
-                        controlManufacturer.refresh();
-                    }
-                    break;
                 case SAVE:
                     if (controlEmployee != null && pnlView.Controls[0].Name == controlEmployee.Name)
                     {
@@ -207,15 +190,13 @@ namespace PhanMemQuanLy.GUI
                         controlManufacturer.save();
                     }
                     break;
-                case CHANGEPASSWORD:
-                    new F_ChangePassword(employee).Visible = true;
-                    break;
             }
             
         }
 
         private void employeeToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            fpnlActions.Visible = true;
             controlEmployee = new ucEmployee(employee);
             setActiveMenu(employeeToolStripMenuItem);
             pnlView.Controls.Clear();
@@ -224,6 +205,7 @@ namespace PhanMemQuanLy.GUI
 
         private void productToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            fpnlActions.Visible = true;
             controlProduct = new ucProduct();
             setActiveMenu(productToolStripMenuItem);
             pnlView.Controls.Clear();
@@ -232,6 +214,7 @@ namespace PhanMemQuanLy.GUI
 
         private void customerToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            fpnlActions.Visible = true;
             controlCustomer = new ucCustomer();
             setActiveMenu(customerToolStripMenuItem);
             pnlView.Controls.Clear();
@@ -240,14 +223,16 @@ namespace PhanMemQuanLy.GUI
 
         private void homeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            controlHome = new ucHome();
-            setActiveMenu(homeToolStripMenuItem);
+            fpnlActions.Visible = false;
+            controlInvoice = new ucInvoice(employee);
+            setActiveMenu(invoiceToolStripMenuItem);
             pnlView.Controls.Clear();
-            pnlView.Controls.Add(controlHome);
+            pnlView.Controls.Add(controlInvoice);
         }
 
         private void invoiceToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            fpnlActions.Visible = true;
             controlInvoice = new ucInvoice(employee);
             setActiveMenu(invoiceToolStripMenuItem);
             pnlView.Controls.Clear();
@@ -265,6 +250,7 @@ namespace PhanMemQuanLy.GUI
 
         private void statisticsToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            fpnlActions.Visible = false;
             controlStatistics = new ucStatistics();
             setActiveMenu(statisticsToolStripMenuItem);
             pnlView.Controls.Clear();
@@ -273,10 +259,23 @@ namespace PhanMemQuanLy.GUI
 
         private void manufacturerToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            fpnlActions.Visible = true;
             controlManufacturer = new ucManufacturer();
             setActiveMenu(manufacturerToolStripMenuItem);
             pnlView.Controls.Clear();
             pnlView.Controls.Add(controlManufacturer);
+        }
+
+        private void changePasswordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new F_ChangePassword(employee).Visible = true;
+        }
+
+        private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            isLogOut = true;
+            Close();
+            preComponent.Visible = true;
         }
     }
 }

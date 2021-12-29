@@ -23,6 +23,7 @@ namespace PhanMemQuanLy.GUI
             string error1 = "Mật khẩu cũ không đúng";
             string error2 = "Mật khẩu mới phải có ít nhất 6 kí tự";
             string error3 = "Nhập lại mật khẩu mới không chính xác";
+            string successMsg = "Đổi mật khẩu thành công";
 
             if (employee.password == old)
             {
@@ -32,6 +33,7 @@ namespace PhanMemQuanLy.GUI
                     {
                         employee.password = newP;
                         dao_e.updateOne(employee);
+                        MessageBox.Show(successMsg, "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
                     {
